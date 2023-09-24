@@ -14,7 +14,7 @@ of learning to express themselves through the keyboard.
 - [Swastik Aryal](https://github.com/Swastik-Aryal)
 - [Sakshi K.C.](https://github.com/acker111)
 - [Rikesh Panta](https://github.com/RiCEmare)
-- [Neer Aryan Bhatta](https://www.github.com/octokatherine)
+- [Neer Aryan Bhatta](https://github.com/Neer-rn)
 
 
 
