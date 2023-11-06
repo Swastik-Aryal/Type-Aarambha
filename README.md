@@ -1,5 +1,5 @@
 <p>
-<img src="https://github.com/Swastik-Aryal/Type-Aarambha/blob/main/Images/typeaaarambha%20logo.png"></p>
+<img src="https://github.com/Swastik-Aryal/Type-Aarambha/blob/main/Images/TypeAarambhaLogo.png"></p>
 <br>
 
 “Type-Aarambha” is a program that provides a platform, especially for Nepalese people.
