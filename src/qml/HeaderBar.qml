@@ -1,9 +1,7 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 
 Item {
-    id: _headerBar // Assign an ID to the parent Item
+    id: _headerItem // Assign an ID to the parent Item
     implicitWidth: parent.width * 0.75
     implicitHeight: parent.height * 0.25
     anchors {
@@ -59,9 +57,6 @@ Item {
                 onClicked: {
                     // Handle practice mode click
                     __currentView = 1
-
-                    _practiceMode.visible = true
-                    // Add your logic for practice mode here
                 }
             }
 
@@ -88,7 +83,6 @@ Item {
                 onClicked: {
                     // Handle game mode click
                     __currentView = 2
-                    // Add your logic for game mode here
                 }
             }
 
@@ -116,9 +110,6 @@ Item {
                 onClicked: {
                     // Handle profile mode click
                     __currentView = 3
-
-                    _userProfileMode.visible = true
-                    // Add your logic for profile mode here
                 }
             }
 
