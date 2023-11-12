@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>src/qml/main.qml</file>
+        <file>src/qml/HeaderBar.qml</file>
+        <file>src/qml/KeyboardLayout.qml</file>
+        <file>src/qml/Keycap.qml</file>
+        <file>src/qml/PracticeMode.qml</file>
+        <file>src/qml/GameMode.qml</file>
+        <file>src/qml/UserProfileMode.qml</file>
+        <file>src/qml/StatBar.qml</file>
+    </qresource>
+    <qresource prefix="/assets">
+        <file>assets/fonts/NotoSans-Regular.ttf</file>
+        <file>assets/fonts/NotoSans-Medium.ttf</file>
+        <file>assets/fonts/NotoSans-Devanagari.ttf</file>
+        <file>assets/fonts/NotoSansMono.ttf</file>
+        <file>assets/fonts/Baloo2.ttf</file>
+        <file>assets/img/typearrambhalogo.svg</file>
+        <file>assets/img/globe-americas.svg</file>
+        <file>assets/img/keyboard-solid-off.svg</file>
+        <file>assets/img/keyboard-solid-on.svg</file>
+    </qresource>
+</RCC>
