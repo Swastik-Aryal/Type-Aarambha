@@ -3,9 +3,11 @@ import QtQuick
 Rectangle {
     property string __keyText: ""
     property real __keyWidth: 40
+    property color __keyShadowColor: "#1B2028"
+    property color __keyTextColor: "#CCCCB5"
+
     //outer Rectangle
     id: _rootRectKey
-
     width: 40
     height: 40
     color: "#151A21"
@@ -13,25 +15,27 @@ Rectangle {
 
     Rectangle {
         //inner rectangle for non-curved top corners
+        id: _cornerRectKey
         width: _rootRectKey.width - 12
         height: parent.height * 0.50
         anchors.horizontalCenter: parent.horizontalCenter
-        color: "#1B2028"
+        color: __keyShadowColor
     }
 
     Rectangle {
-        id: _shadowRect
+        id: _shadowRectKey
         radius: parent.radius
         width: _rootRectKey.width - 12
         height: parent.height * 0.75
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        color: "#1B2028"
+        color: __keyShadowColor
         Text {
+            id: _keyText
             text: __keyText
             font.family: _Baloo2.name
             font.pixelSize: parent.height * 0.5
-            color: "#CCCCB5"
+            color: __keyTextColor
             anchors.centerIn: parent
             //   anchors.verticalCenterOffset: -(parent.height / 8)
         }
@@ -39,10 +43,16 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onPressed: {
-            _rootRectKey.scale = 0.85
+            __keyShadowColor = "#CCCCB5"
+            __keyShadowColor = "#CCCCB5"
+            _rootRectKey.color = "#AFAF89"
+            __keyTextColor = "#151A21"
         }
         onReleased: {
-            _rootRectKey.scale = 1
+            __keyShadowColor = "#1B2028"
+            __keyShadowColor = "#1B2028"
+            _rootRectKey.color = "#151A21"
+            __keyTextColor = "#CCCCB5"
         }
     }
 }
