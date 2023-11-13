@@ -1,26 +1,26 @@
 import QtQuick
 
 Item {
-    id: _headerItem // Assign an ID to the parent Item
+    id: _headerItem
     implicitWidth: parent.width * 0.75
     implicitHeight: parent.height * 0.25
     anchors {
-        horizontalCenter: parent.horizontalCenter // Center horizontally in parent
-        top: parent.top // Align with the top of the parent
+        horizontalCenter: parent.horizontalCenter
+        top: parent.top
     }
 
     Item {
-        id: _logoContainer // Assign an ID to the Item
+        id: _logoContainer
         width: parent.width * 0.50
         height: parent.height
-        anchors.left: parent.left // Anchor to the left of the parent
+        anchors.left: parent.left
 
         Item {
             width: parent.width * 0.75
             height: parent.height / 2
             anchors {
-                left: parent.left // Anchor to the left of the parent
-                verticalCenter: parent.verticalCenter // Center vertically in parent
+                left: parent.left
+                verticalCenter: parent.verticalCenter
             }
             Image {
                 // Logo
@@ -28,26 +28,26 @@ Item {
                 fillMode: Image.PreserveAspectFit
 
                 anchors {
-                    left: parent.left // Anchor to the left of the parent
-                    verticalCenter: parent.verticalCenter // Center vertically in parent
-                    horizontalCenter: parent.horizontalCenter // Center horizontally in parent
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    horizontalCenter: parent.horizontalCenter
                 }
             }
         }
     }
 
     Item {
-        id: _modeButtonItem // Assign an ID to the parent Rectangle
+        id: _modeButtonItem
         width: parent.width * 0.40
         height: parent.height
 
-        anchors.right: parent.right // Anchor to the right of the parent
+        anchors.right: parent.right
 
         Item {
-            id: _practiceModeButton // Assign an ID to the Rectangle
 
+            // Assign an ID to the Rectangle
             width: _modeButtonItem.width / 4
-            anchors.verticalCenter: parent.verticalCenter // Center vertically in parent
+            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             height: _modeButtonItem.height / 3
 
@@ -71,17 +71,16 @@ Item {
         }
 
         Item {
-            id: _gameModeButton // Assign an ID to the Rectangle
+            id: _gameModeButton
             width: _modeButtonItem.width / 4
             anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter // Center vertically in parent
+            anchors.horizontalCenter: parent.horizontalCenter
             height: _modeButtonItem.height / 3
 
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    // Handle game mode click
                     __currentView = 2
                 }
             }
@@ -97,10 +96,10 @@ Item {
         }
 
         Item {
-            id: _profileModeButton // Assign an ID to the Rectangle
+            id: _profileModeButton
 
             width: _modeButtonItem.width / 4
-            anchors.verticalCenter: parent.verticalCenter // Center vertically in parent
+            anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             height: _modeButtonItem.height / 3
 
