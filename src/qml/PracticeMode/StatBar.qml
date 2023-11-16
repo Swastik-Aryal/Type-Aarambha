@@ -17,6 +17,50 @@ Rectangle {
     color: "#151A21"
     radius: 15
 
+    //custom divider component
+    component Divider: Rectangle {
+        color: "#1B2028"
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.preferredWidth: 0.04
+        radius: 50
+    }
+
+    //custom tooltip component
+    component Tooltip: ToolTip {
+        property string __ttText: ""
+        //text when hovered
+        delay: 200
+        padding: 10
+        y: -40
+        background: Rectangle {
+            color: "#101111"
+        }
+
+        Text {
+            text: __ttText
+            font.family: _NotoSansRegular.name
+            font.pixelSize: 16
+            color: "#FFFFFF"
+            anchors.centerIn: parent
+        }
+
+        enter: Transition {
+            NumberAnimation {
+                property: "opacity"
+                from: 0.0
+                to: 1.0
+            }
+        }
+        exit: Transition {
+            NumberAnimation {
+                property: "opacity"
+                from: 1.0
+                to: 0.0
+            }
+        }
+    }
+
     Item {
         id: _innerRect
         implicitWidth: parent.width
@@ -78,49 +122,13 @@ Rectangle {
                     }
                 }
 
-                ToolTip {
-                    //text when hovered
-                    delay: 200
-                    padding: 10
-                    y: -40
+                Tooltip {
                     visible: _langMouseArea.containsMouse
-                    background: Rectangle {
-                        color: "#101111"
-                    }
-
-                    Text {
-                        text: "switch langauge"
-                        font.family: _NotoSansRegular.name
-                        font.pixelSize: 16
-                        color: "#FFFFFF"
-                        anchors.centerIn: parent
-                    }
-
-                    enter: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                        }
-                    }
-                    exit: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1.0
-                            to: 0.0
-                        }
-                    }
+                    __ttText: "switch langauge"
                 }
             }
 
-            Rectangle {
-                //divider
-                color: "#1B2028"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 0.04
-                radius: 50
-            }
+            Divider {}
 
             Item {
                 //wpm Div
@@ -169,49 +177,13 @@ Rectangle {
                     hoverEnabled: true
                 }
 
-                ToolTip {
-                    //text when hovered
-                    delay: 200
-                    padding: 10
-                    y: -40
+                Tooltip {
                     visible: _wpmMouseArea.containsMouse
-                    background: Rectangle {
-                        color: "#101111"
-                    }
-
-                    Text {
-                        text: "88.8 words per minute"
-                        font.family: _NotoSansRegular.name
-                        font.pixelSize: 16
-                        color: "#FFFFFF"
-                        anchors.centerIn: parent
-                    }
-
-                    enter: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                        }
-                    }
-                    exit: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1.0
-                            to: 0.0
-                        }
-                    }
+                    __ttText: "88.8 words per minute"
                 }
             }
 
-            Rectangle {
-                //divider
-                color: "#1B2028"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 0.04
-                radius: 50
-            }
+            Divider {}
 
             Item {
                 //accuracy Div
@@ -261,49 +233,13 @@ Rectangle {
                     hoverEnabled: true
                 }
 
-                ToolTip {
-                    //text when hovered
-                    delay: 200
-                    padding: 10
-                    y: -40
+                Tooltip {
                     visible: _accMouseArea.containsMouse
-                    background: Rectangle {
-                        color: "#101111"
-                    }
-
-                    Text {
-                        text: "88.8% accuracy"
-                        font.family: _NotoSansRegular.name
-                        font.pixelSize: 16
-                        color: "#FFFFFF"
-                        anchors.centerIn: parent
-                    }
-
-                    enter: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                        }
-                    }
-                    exit: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1.0
-                            to: 0.0
-                        }
-                    }
+                    __ttText: "88.8% accuracy"
                 }
             }
 
-            Rectangle {
-                //divider
-                color: "#1B2028"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 0.04
-                radius: 50
-            }
+            Divider {}
 
             Item {
                 //characters Div
@@ -354,49 +290,13 @@ Rectangle {
                     hoverEnabled: true
                 }
 
-                ToolTip {
-                    //text when hovered
-                    delay: 200
-                    padding: 10
-                    y: -40
+                Tooltip {
                     visible: _charMouseArea.containsMouse
-                    background: Rectangle {
-                        color: "#101111"
-                    }
-
-                    Text {
-                        text: "correct / incorrect / extra / missed"
-                        font.family: _NotoSansRegular.name
-                        font.pixelSize: 16
-                        color: "#FFFFFF"
-                        anchors.centerIn: parent
-                    }
-
-                    enter: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                        }
-                    }
-                    exit: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1.0
-                            to: 0.0
-                        }
-                    }
+                    __ttText: "correct / incorrect / extra / missed"
                 }
             }
 
-            Rectangle {
-                //divider
-                color: "#1B2028"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 0.04
-                radius: 50
-            }
+            Divider {}
 
             Item {
                 //toggle Div
@@ -452,38 +352,9 @@ Rectangle {
                     }
                 }
 
-                ToolTip {
-                    //text when hovered
-                    delay: 200
-                    padding: 10
-                    y: -40
+                Tooltip {
                     visible: _toggMouseArea.containsMouse
-                    background: Rectangle {
-                        color: "#101111"
-                    }
-
-                    Text {
-                        text: "toggle keyboard visibility"
-                        font.family: _NotoSansRegular.name
-                        font.pixelSize: 16
-                        color: "#FFFFFF"
-                        anchors.centerIn: parent
-                    }
-
-                    enter: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                        }
-                    }
-                    exit: Transition {
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1.0
-                            to: 0.0
-                        }
-                    }
+                    __ttText: "toggle keyboard visibility"
                 }
             }
         }
