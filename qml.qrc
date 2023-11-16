@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">src/qml/main.qml</file>
+        <file alias="HeaderBar.qml">src/qml/HeaderBar.qml</file>
+    </qresource>
+
+    <qresource prefix="/PracticeMode">
+        <file alias="PracticeMode.qml">src/qml/PracticeMode/PracticeMode.qml</file>
+        <file alias="KeyboardLayout.qml">src/qml/PracticeMode/KeyboardLayout.qml</file>
+        <file alias="Keycap.qml">src/qml/PracticeMode/Keycap.qml</file>
+        <file alias="StatBar.qml">src/qml/PracticeMode/StatBar.qml</file>
+    </qresource>
+
+    <qresource prefix="/GameMode">
+        <file alias="GameMode.qml">src/qml/GameMode/GameMode.qml</file>
+    </qresource>
+
+    <qresource prefix="/ProfileMode">
+        <file alias="UserProfileMode.qml">src/qml/ProfileMode/UserProfileMode.qml</file>
+    </qresource>
+
+</RCC>
