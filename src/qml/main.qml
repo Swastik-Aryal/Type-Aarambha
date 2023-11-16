@@ -1,6 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 
+import "PracticeMode"
+import "GameMode"
+import "ProfileMode"
+
 ApplicationWindow {
     visible: true
     width: Screen.width
