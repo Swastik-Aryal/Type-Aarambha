@@ -5,6 +5,7 @@ SOURCES += \
 
 resources.prefix = /$${TARGET}
 RESOURCES += \
+    qml.qrc \
     resources.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
