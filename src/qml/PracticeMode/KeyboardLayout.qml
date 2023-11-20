@@ -4,7 +4,7 @@ import QtQuick.Layouts
 // Main Item containing the keyboard layout
 Item {
 
-    property string currentLanguage: "English"
+    property string currentLanguage: "english"
 
     id: _keyboardLayoutItem
 
@@ -315,6 +315,11 @@ Item {
     }
 
     property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _backspaceKey, _tabKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _capsKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _enterKey, _leftShiftKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey, _rightShiftKey, _leftCtrlKey, _leftAltKey, _spacebarKey, _rightAltKey, _rightCtrlKey]
+
+    property var qwertyLayout: {
+        base: ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/"]
+        shift: ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?"]
+    }
 }
 
 /*

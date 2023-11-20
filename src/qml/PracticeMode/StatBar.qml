@@ -103,7 +103,7 @@ Rectangle {
 
                         Text {
                             id: _langSelect
-                            text: "english"
+                            text: _keyboardLayout.currentLanguage
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -118,7 +118,8 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     hoverEnabled: true
                     onClicked: {
-                        _langSelect.text = _langSelect.text === "english" ? "nepali" : "english"
+                        _keyboardLayout.currentLanguage = _keyboardLayout.currentLanguage
+                                === "english" ? "nepali" : "english"
                     }
                 }
 
