@@ -13,6 +13,7 @@
 
     <qresource prefix="/GameMode">
         <file alias="GameMode.qml">src/qml/GameMode/GameMode.qml</file>
+        <file alias="Obstacle.qml">src/qml/GameMode/Obstacle.qml</file>
     </qresource>
 
     <qresource prefix="/ProfileMode">
