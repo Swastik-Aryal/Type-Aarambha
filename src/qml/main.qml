@@ -51,6 +51,8 @@ ApplicationWindow {
     GameMode {
         id: _gameMode
         visible: false
+        scale: 0.85
+        clip: true
     }
 
     // User Profile Mode
