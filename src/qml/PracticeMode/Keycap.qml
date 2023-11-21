@@ -1,6 +1,7 @@
 import QtQuick
 
 Rectangle {
+    property var __iso: ""
     property string __keyText: ""
     property real __keyWidth: 40
     property color __keyShadowColor: "#1B2028"
