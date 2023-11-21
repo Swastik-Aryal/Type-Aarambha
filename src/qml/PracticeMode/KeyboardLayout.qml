@@ -32,55 +32,67 @@ Item {
             spacing: 4
             Keycap {
                 id: _backtickKey
-                __keyText: "`"
+                __iso: "E00"
             }
+
             Keycap {
                 id: _oneKey
-                __keyText: "1"
+                __iso: "E01"
             }
+
             Keycap {
                 id: _twoKey
-                __keyText: "2"
+                __iso: "E02"
             }
+
             Keycap {
                 id: _threeKey
-                __keyText: "3"
+                __iso: "E03"
             }
+
             Keycap {
                 id: _fourKey
-                __keyText: "4"
+                __iso: "E04"
             }
+
             Keycap {
                 id: _fiveKey
-                __keyText: "5"
+                __iso: "E05"
             }
+
             Keycap {
                 id: _sixKey
-                __keyText: "6"
+                __iso: "E06"
             }
+
             Keycap {
                 id: _sevenKey
-                __keyText: "7"
+                __iso: "E07"
             }
+
             Keycap {
                 id: _eightKey
-                __keyText: "8"
+                __iso: "E08"
             }
+
             Keycap {
                 id: _nineKey
-                __keyText: "9"
+                __iso: "E09"
             }
+
             Keycap {
                 id: _zeroKey
-                __keyText: "0"
+                __iso: "E10"
             }
+
             Keycap {
                 id: _minusKey
-                __keyText: "-"
+                __iso: "E11"
             }
+
             Keycap {
                 id: _equalsKey
-                __keyText: "="
+                __iso: "E12"
             }
             Keycap {
                 id: _backspaceKey
@@ -100,56 +112,68 @@ Item {
             }
             Keycap {
                 id: _qKey
-                __keyText: "Q"
+                __iso: "D01"
             }
+
             Keycap {
                 id: _wKey
-                __keyText: "W"
+                __iso: "D02"
             }
+
             Keycap {
                 id: _eKey
-                __keyText: "E"
+                __iso: "D03"
             }
+
             Keycap {
                 id: _rKey
-                __keyText: "R"
+                __iso: "D04"
             }
+
             Keycap {
                 id: _tKey
-                __keyText: "T"
+                __iso: "D05"
             }
+
             Keycap {
                 id: _yKey
-                __keyText: "Y"
+                __iso: "D06"
             }
+
             Keycap {
                 id: _uKey
-                __keyText: "U"
+                __iso: "D07"
             }
+
             Keycap {
                 id: _iKey
-                __keyText: "I"
+                __iso: "D08"
             }
+
             Keycap {
                 id: _oKey
-                __keyText: "O"
+                __iso: "D09"
             }
+
             Keycap {
                 id: _pKey
-                __keyText: "P"
+                __iso: "D10"
             }
+
             Keycap {
                 id: _openSquareBracketKey
-                __keyText: "["
+                __iso: "D11"
             }
+
             Keycap {
                 id: _closeSquareBracketKey
-                __keyText: "]"
+                __iso: "D12"
             }
+
             Keycap {
                 id: _backslashKey
+                __iso: "C12"
                 width: __keyWidth * 1.625
-                __keyText: "\\"
             }
         }
 
@@ -165,48 +189,59 @@ Item {
             }
             Keycap {
                 id: _aKey
-                __keyText: "A"
+                __iso: "C01"
             }
+
             Keycap {
                 id: _sKey
-                __keyText: "S"
+                __iso: "C02"
             }
+
             Keycap {
                 id: _dKey
-                __keyText: "D"
+                __iso: "C03"
             }
+
             Keycap {
                 id: _fKey
-                __keyText: "F"
+                __iso: "C04"
             }
+
             Keycap {
                 id: _gKey
-                __keyText: "G"
+                __iso: "C05"
             }
+
             Keycap {
                 id: _hKey
-                __keyText: "H"
+                __iso: "C06"
             }
+
             Keycap {
                 id: _jKey
-                __keyText: "J"
+                __iso: "C07"
             }
+
             Keycap {
                 id: _kKey
-                __keyText: "K"
+                __iso: "C08"
             }
+
             Keycap {
                 id: _lKey
-                __keyText: "L"
+                __iso: "C09"
             }
+
             Keycap {
                 id: _semicolonKey
-                __keyText: ";"
+                __iso: "C10"
             }
+
             Keycap {
                 id: _apostropheKey
-                __keyText: "'"
+                __iso: "C11"
             }
+
             Keycap {
                 id: _enterKey
                 width: __keyWidth * 2.35
@@ -227,43 +262,52 @@ Item {
             }
             Keycap {
                 id: _zKey
-                __keyText: "Z"
+                __iso: "B01"
             }
+
             Keycap {
                 id: _xKey
-                __keyText: "X"
+                __iso: "B02"
             }
+
             Keycap {
                 id: _cKey
-                __keyText: "C"
+                __iso: "B03"
             }
+
             Keycap {
                 id: _vKey
-                __keyText: "V"
+                __iso: "B04"
             }
+
             Keycap {
                 id: _bKey
-                __keyText: "B"
+                __iso: "B05"
             }
+
             Keycap {
                 id: _nKey
-                __keyText: "N"
+                __iso: "B06"
             }
+
             Keycap {
                 id: _mKey
-                __keyText: "M"
+                __iso: "B07"
             }
+
             Keycap {
                 id: _commaKey
-                __keyText: ","
+                __iso: "B08"
             }
+
             Keycap {
                 id: _dotKey
-                __keyText: "."
+                __iso: "B09"
             }
+
             Keycap {
                 id: _slashKey
-                __keyText: "/"
+                __iso: "B10"
             }
             Keycap {
                 id: _rightShiftKey
@@ -314,26 +358,126 @@ Item {
         }
     }
 
-    property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _backspaceKey, _tabKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _capsKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _enterKey, _leftShiftKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey, _rightShiftKey, _leftCtrlKey, _leftAltKey, _spacebarKey, _rightAltKey, _rightCtrlKey]
+    property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey]
 
-    property var qwertyLayout: {
-        base: ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/"]
-        shift: ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?"]
+    function updateKeyTexts() {
+        for (var i = 0; i < keyList.length; ++i) {
+            var key = keyList[i]
+            key.__keyText = getKeyText(key.__iso, currentLanguage)
+        }
+    }
+
+    function getKeyText(keyIso, currentLanguage) {
+
+        var translationDict = {
+            "english": {
+                "E00": "`",
+                "E01": "1",
+                "E02": "2",
+                "E03": "3",
+                "E04": "4",
+                "E05": "5",
+                "E06": "6",
+                "E07": "7",
+                "E08": "8",
+                "E09": "9",
+                "E10": "0",
+                "E11": "-",
+                "E12": "=",
+                "D01": "q",
+                "D02": "w",
+                "D03": "e",
+                "D04": "r",
+                "D05": "t",
+                "D06": "y",
+                "D07": "u",
+                "D08": "i",
+                "D09": "o",
+                "D10": "p",
+                "D11": "[",
+                "D12": "]",
+                "C12": "\\",
+                "C01": "a",
+                "C02": "s",
+                "C03": "d",
+                "C04": "f",
+                "C05": "g",
+                "C06": "h",
+                "C07": "j",
+                "C08": "k",
+                "C09": "l",
+                "C10": ";",
+                "C11": "'",
+                "B00": "\\",
+                "B01": "z",
+                "B02": "x",
+                "B03": "c",
+                "B04": "v",
+                "B05": "b",
+                "B06": "n",
+                "B07": "m",
+                "B08": ",",
+                "B09": ".",
+                "B10": "/"
+            },
+            "nepali": {
+                "E00": "ञ",
+                "E01": "ज\u{94D}ञ",
+                "E02": "घ",
+                "E03": "ङ",
+                "E04": "झ",
+                "E05": "छ",
+                "E06": "ट",
+                "E07": "ठ",
+                "E08": "ड",
+                "E09": "ढ",
+                "E10": "ण",
+                "E11": "(",
+                "E12": ".",
+                "D01": "त\u{94D}र",
+                "D02": "ध",
+                "D03": "भ",
+                "D04": "च",
+                "D05": "त",
+                "D06": "थ",
+                "D07": "ग",
+                "D08": "ष",
+                "D09": "य",
+                "D10": "उ",
+                "D11": "\u{943}",
+                "D12": "\u{947}",
+                "C12": "\u{94D}र",
+                "C01": "ब",
+                "C02": "क",
+                "C03": "म",
+                "C04": "\u{93E}",
+                "C05": "न",
+                "C06": "ज",
+                "C07": "व",
+                "C08": "प",
+                "C09": "\u{93F}",
+                "C10": "स",
+                "C11": "\u{941}",
+                "B01": "श",
+                "B02": "ह",
+                "B03": "अ",
+                "B04": "ख",
+                "B05": "द",
+                "B06": "ल",
+                "B07": "फ",
+                "B08": ",",
+                "B09": "।",
+                "B10": "र"
+            }
+        }
+        return translationDict[currentLanguage][keyIso]
+    }
+
+    onCurrentLanguageChanged: {
+        updateKeyTexts()
+    }
+
+    Component.onCompleted: {
+        updateKeyTexts()
     }
 }
-
-/*
-            Rectangle {
-                anchors.fill: parent
-                color: "red"
-                Text {
-                    text: parent.width + " x " + parent.height
-                    font.family: _Baloo2.name
-                    font.pixelSize: parent.height * 0.5
-                    color: "#CCCCB5"
-                    anchors.centerIn: parent
-                    //   anchors.verticalCenterOffset: -(parent.height / 8)
-                }
-            }
-*/
-
