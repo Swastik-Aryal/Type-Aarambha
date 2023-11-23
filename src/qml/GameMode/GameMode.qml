@@ -1,5 +1,4 @@
-import QtQuick 2.0
-import QtQuick.Window
+import QtQuick
 
 Item {
     id: win
