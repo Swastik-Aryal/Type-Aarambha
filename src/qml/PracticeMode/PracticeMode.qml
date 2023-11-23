@@ -7,6 +7,5 @@ Item {
     }
     KeyboardLayout {
         id: _keyboardLayout
-        scale: 0.9
     }
 }
