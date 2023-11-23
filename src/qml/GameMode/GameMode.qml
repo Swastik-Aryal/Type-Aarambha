@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+FocusScope {
     id: win
     width: 1000
     height: 600
@@ -8,7 +8,9 @@ Item {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.topMargin: -60
 
+
     property int score: 0
+
 
     Image {
 

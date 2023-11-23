@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+FocusScope {
 
     anchors.fill: parent
     Text {

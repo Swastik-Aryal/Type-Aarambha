@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+FocusScope {
     anchors.fill: parent
     StatBar {
         id: _statBar
@@ -8,4 +8,5 @@ Item {
     KeyboardLayout {
         id: _keyboardLayout
     }
+
 }

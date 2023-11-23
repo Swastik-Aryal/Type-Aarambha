@@ -62,7 +62,7 @@ Item {
 
             Text {
                 id: _practiceButtonText
-                text: "practice"
+                text: "Practice"
                 font.family: _NotoSansMedium.name
                 font.pixelSize: parent.width / 4
                 color: "#CCCCB5"
@@ -87,7 +87,7 @@ Item {
 
             Text {
                 id: _gameButtonText
-                text: "game"
+                text: "Game"
                 font.family: _NotoSansMedium.name
                 font.pixelSize: parent.width / 4
                 color: "#CCCCB5"
@@ -114,7 +114,7 @@ Item {
 
             Text {
                 id: _profileButtonText
-                text: "profile"
+                text: "Profile"
                 font.family: _NotoSansMedium.name
                 font.pixelSize: parent.width / 4
                 color: "#CCCCB5"
@@ -147,14 +147,17 @@ Item {
             PropertyChanges {
                 target: _practiceMode
                 visible: true
+                focus: true
             }
             PropertyChanges {
                 target: _gameMode
                 visible: false
+                focus: false
             }
             PropertyChanges {
                 target: _userProfileMode
                 visible: false
+                focus: false
             }
         },
         State {
@@ -177,14 +180,17 @@ Item {
             PropertyChanges {
                 target: _practiceMode
                 visible: false
+                focus: false
             }
             PropertyChanges {
                 target: _gameMode
                 visible: true
+                focus: true
             }
             PropertyChanges {
                 target: _userProfileMode
                 visible: false
+                focus: false
             }
         },
         State {
@@ -207,14 +213,17 @@ Item {
             PropertyChanges {
                 target: _practiceMode
                 visible: false
+                focus: false
             }
             PropertyChanges {
                 target: _gameMode
                 visible: false
+                focus: false
             }
             PropertyChanges {
                 target: _userProfileMode
                 visible: true
+                focus: true
             }
         }
     ]

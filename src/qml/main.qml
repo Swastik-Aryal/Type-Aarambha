@@ -45,20 +45,24 @@ ApplicationWindow {
     // Practice Mode
     PracticeMode {
         id: _practiceMode
+        focus: true
     }
 
     // Game Mode
     GameMode {
         id: _gameMode
+
         visible: false
-        scale: 0.85
         clip: true
+        scale: 0.85
+        focus: true
     }
 
     // User Profile Mode
     UserProfileMode {
         id: _userProfileMode
         visible: false
+        focus: true
     }
 
     HeaderBar {
