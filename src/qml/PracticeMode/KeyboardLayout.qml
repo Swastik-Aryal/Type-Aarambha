@@ -5,7 +5,8 @@ import QtQuick.Layouts
 Item {
 
     property string currentLanguage: "english"
-    property string shiftState: "CtrlAltR"
+    property string shiftState: "base"
+    property bool capsLockPressed: false
 
     id: _keyboardLayoutItem
 
@@ -716,7 +717,90 @@ Item {
             return translationDict[currentLanguage][shiftState][keyIso]
         }
     }
+    focus: true
 
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Shift) {
+            shiftState = shiftState === "shift" ? "base" : "shift"
+        } else if (event.key === Qt.Key_CapsLock) {
+            capsLockPressed = !capsLockPressed
+
+            if (capsLockPressed) {
+                shiftState = "shift"
+            } else {
+                shiftState = "base"
+            }
+        }
+
+        if (event.modifiers & Qt.ShiftModifier
+                && event.modifiers & Qt.AltModifier
+                && event.modifiers & Qt.ControlModifier) {
+            shiftState = "shiftCtrlAlt"
+        } else if (!(event.modifiers & Qt.ShiftModifier)
+                   && event.modifiers & Qt.AltModifier
+                   && event.modifiers & Qt.ControlModifier) {
+            shiftState = "base"
+        } else if (event.modifiers & Qt.ShiftModifier
+                   && !(event.modifiers & Qt.AltModifier)
+                   && event.modifiers & Qt.ControlModifier) {
+            shiftState = shiftState === "shift" ? "base" : "shift"
+        } else if (event.modifiers & Qt.ShiftModifier
+                   && (event.modifiers & Qt.AltModifier)
+                   && !(event.modifiers & Qt.ControlModifier)) {
+            shiftState = shiftState === "shift" ? "base" : "shift"
+        }
+    }
+
+    // Handle key release events
+    Keys.onReleased: {
+        if (event.key === Qt.Key_Shift) {
+            shiftState = shiftState === "shift" ? "base" : "shift"
+        }
+    }
+
+
+    /*
+    Keys.onPressed: event => {
+                        if (event.modifiers & Qt.NoModifier) {
+                            key_pressed = true
+                        }
+                        if (caps_pressed === true) {
+                            shiftState = shiftState === "shift" ? "base" : "shift"
+                        }
+
+
+                        /*if (event.modifiers & Qt.ShiftModifier
+                            && event.modifiers & Qt.AltModifier
+                            && event.modifiers & Qt.ControlModifier) {
+                            shiftState = "shiftCtrlAlt"
+                            console.log("both pressed")
+                        } else if (event.modifiers & Qt.ShiftModifier) {
+                            shiftState = shiftState === "base" ? "shift" : "base"
+                            console.log("only shift")
+                        } else if (event.modifiers & Qt.ControlModifier
+                                   && event.modifiers & Qt.AltModifier) {
+                            shiftState = "CtrlAltR"
+                            console.log("both pressed")
+                        }
+                        if (event.key === Qt.Key_CapsLock) {
+
+                            caps_pressed = caps_pressed === true ? false : true
+                            console.log("caps pressed")
+                        }
+                        if (event.modifiers & Qt.ShiftModifier) {
+                            shiftState = shiftState === "base" ? "shift" : "base"
+                            console.log("shift pressed")
+                        }
+                    }
+
+    Keys.onReleased: event => {
+                         if (!(event.modifiers & Qt.ShiftModifier)) {
+                             shiftState = shiftState === "base" ? "shift" : "base"
+                             console.log("shift released")
+                         }
+                     }
+
+    */
     onCurrentLanguageChanged: {
         updateKeyTexts()
     }
