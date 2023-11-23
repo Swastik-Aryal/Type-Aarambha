@@ -5,7 +5,7 @@ import QtQuick.Controls
 Rectangle {
     id: _statRect
     // Set the width and height
-    implicitWidth: parent.width * 0.50
+    implicitWidth: parent.width * 0.47
     implicitHeight: parent.height * 0.065
 
     // Center within its parent
@@ -135,7 +135,7 @@ Rectangle {
                 //wpm Div
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.preferredWidth: 0.9
+                Layout.preferredWidth: 1
                 RowLayout {
                     anchors.fill: parent
                     spacing: 0
@@ -246,7 +246,7 @@ Rectangle {
                 //characters Div
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.preferredWidth: 1.9
+                Layout.preferredWidth: 1.5
 
                 RowLayout {
                     anchors.fill: parent
@@ -256,7 +256,7 @@ Rectangle {
                         //"characters:" div
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        Layout.preferredWidth: 1
+                        Layout.preferredWidth: 1.35
 
                         Text {
                             text: "characters :"
@@ -272,10 +272,10 @@ Rectangle {
                         //character stats div
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        Layout.preferredWidth: 1.2
+                        Layout.preferredWidth: 1
 
                         Text {
-                            text: "188 / 8 / 8 / 8"
+                            text: "188 / 88"
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -293,7 +293,7 @@ Rectangle {
 
                 Tooltip {
                     visible: _charMouseArea.containsMouse
-                    __ttText: "correct / incorrect / extra / missed"
+                    __ttText: "188 correct / 88 incorrect"
                 }
             }
 
