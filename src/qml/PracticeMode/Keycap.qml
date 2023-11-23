@@ -1,17 +1,18 @@
 import QtQuick
 
 Rectangle {
-    property var __iso: ""
+    property string __iso: ""
     property string __keyText: ""
     property real __keyWidth: 40
     property color __keyShadowColor: "#1B2028"
     property color __keyTextColor: "#CCCCB5"
+    property color __keyRectColor: "#151A21"
 
     //outer Rectangle
     id: _rootRectKey
     width: 40
     height: 40
-    color: "#151A21"
+    color: __keyRectColor
     radius: height * 0.15
 
     Rectangle {
@@ -43,16 +44,17 @@ Rectangle {
     }
     MouseArea {
         anchors.fill: parent
+
         onPressed: {
             __keyShadowColor = "#CCCCB5"
             __keyShadowColor = "#CCCCB5"
-            _rootRectKey.color = "#AFAF89"
+            __keyRectColor = "#AFAF89"
             __keyTextColor = "#151A21"
         }
         onReleased: {
             __keyShadowColor = "#1B2028"
             __keyShadowColor = "#1B2028"
-            _rootRectKey.color = "#151A21"
+            __keyRectColor = "#151A21"
             __keyTextColor = "#CCCCB5"
         }
     }
