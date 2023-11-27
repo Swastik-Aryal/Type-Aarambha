@@ -4,17 +4,15 @@ import QtQuick.Layouts
 // Main Item containing the keyboard layout
 Item {
 
-    property string currentLanguage: "english"
-    property string shiftState: "base"
-    property bool capsLockPressed: false
+    property string __currentLanguage: "english"
+    property string __shiftState: "base"
+    property bool __capsLockPressed: false
 
     id: _keyboardLayoutItem
 
-    // Set the width and height of the keyboard layout
     implicitWidth: parent.width * 0.50
     implicitHeight: parent.height * 0.25
 
-    // Center the keyboard layout within its parent
     anchors {
         horizontalCenter: parent.horizontalCenter
         verticalCenter: parent.verticalCenter
@@ -23,7 +21,6 @@ Item {
 
     // Column layout for arranging rows of keys
     ColumnLayout {
-        // Fill the parent item
         anchors.fill: parent
         Layout.alignment: Qt.AlignVCenter
         spacing: 4
@@ -264,14 +261,14 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onPressed: {
-                        shiftState = "shift"
+                        __shiftState = "shift"
                         parent.__keyShadowColor = "#CCCCB5"
                         parent.__keyShadowColor = "#CCCCB5"
                         parent.__keyRectColor = "#AFAF89"
                         parent.__keyTextColor = "#151A21"
                     }
                     onReleased: {
-                        shiftState = "base"
+                        __shiftState = "base"
                         parent.__keyShadowColor = "#1B2028"
                         parent.__keyShadowColor = "#1B2028"
                         parent.__keyRectColor = "#151A21"
@@ -335,14 +332,14 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onPressed: {
-                        shiftState = "shift"
+                        __shiftState = "shift"
                         parent.__keyShadowColor = "#CCCCB5"
                         parent.__keyShadowColor = "#CCCCB5"
                         parent.__keyRectColor = "#AFAF89"
                         parent.__keyTextColor = "#151A21"
                     }
                     onReleased: {
-                        shiftState = "base"
+                        __shiftState = "base"
                         parent.__keyShadowColor = "#1B2028"
                         parent.__keyShadowColor = "#1B2028"
                         parent.__keyRectColor = "#151A21"
@@ -396,15 +393,14 @@ Item {
 
     property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey]
 
-    function updateKeyTexts() {
+    function js_updateKeyTexts() {
         for (var i = 0; i < keyList.length; ++i) {
             var key = keyList[i]
-            key.__keyText = getKeyText(key.__iso)
+            key.__keyText = js_getKeyText(key.__iso)
         }
     }
 
-    function getKeyText(keyIso) {
-
+    function js_getKeyText(keyIso) {
         var translationDict = {
             "english": {
                 "base": {
@@ -710,51 +706,51 @@ Item {
                 }
             }
         }
-        if (currentLanguage === "english" && shiftState !== "base"
-                && shiftState !== "shift") {
-            return translationDict[currentLanguage]["base"][keyIso]
+        if (__currentLanguage === "english" && __shiftState !== "base"
+                && __shiftState !== "shift") {
+            return translationDict[__currentLanguage]["base"][keyIso]
         } else {
-            return translationDict[currentLanguage][shiftState][keyIso]
+            return translationDict[__currentLanguage][__shiftState][keyIso]
         }
     }
     focus: true
 
     Keys.onPressed: {
         if (event.key === Qt.Key_Shift) {
-            shiftState = shiftState === "shift" ? "base" : "shift"
+            __shiftState = __shiftState === "shift" ? "base" : "shift"
         } else if (event.key === Qt.Key_CapsLock) {
             capsLockPressed = !capsLockPressed
 
             if (capsLockPressed) {
-                shiftState = "shift"
+                __shiftState = "shift"
             } else {
-                shiftState = "base"
+                __shiftState = "base"
             }
         }
 
         if (event.modifiers & Qt.ShiftModifier
                 && event.modifiers & Qt.AltModifier
                 && event.modifiers & Qt.ControlModifier) {
-            shiftState = "shiftCtrlAlt"
+            __shiftState = "shiftCtrlAlt"
         } else if (!(event.modifiers & Qt.ShiftModifier)
                    && event.modifiers & Qt.AltModifier
                    && event.modifiers & Qt.ControlModifier) {
-            shiftState = "base"
+            __shiftState = "base"
         } else if (event.modifiers & Qt.ShiftModifier
                    && !(event.modifiers & Qt.AltModifier)
                    && event.modifiers & Qt.ControlModifier) {
-            shiftState = shiftState === "shift" ? "base" : "shift"
+            __shiftState = __shiftState === "shift" ? "base" : "shift"
         } else if (event.modifiers & Qt.ShiftModifier
                    && (event.modifiers & Qt.AltModifier)
                    && !(event.modifiers & Qt.ControlModifier)) {
-            shiftState = shiftState === "shift" ? "base" : "shift"
+            __shiftState = __shiftState === "shift" ? "base" : "shift"
         }
     }
 
     // Handle key release events
     Keys.onReleased: {
         if (event.key === Qt.Key_Shift) {
-            shiftState = shiftState === "shift" ? "base" : "shift"
+            __shiftState = __shiftState === "shift" ? "base" : "shift"
         }
     }
 
@@ -765,21 +761,21 @@ Item {
                             key_pressed = true
                         }
                         if (caps_pressed === true) {
-                            shiftState = shiftState === "shift" ? "base" : "shift"
+                            __shiftState = __shiftState === "shift" ? "base" : "shift"
                         }
 
 
                         /*if (event.modifiers & Qt.ShiftModifier
                             && event.modifiers & Qt.AltModifier
                             && event.modifiers & Qt.ControlModifier) {
-                            shiftState = "shiftCtrlAlt"
+                            __shiftState = "shiftCtrlAlt"
                             console.log("both pressed")
                         } else if (event.modifiers & Qt.ShiftModifier) {
-                            shiftState = shiftState === "base" ? "shift" : "base"
+                            __shiftState = __shiftState === "base" ? "shift" : "base"
                             console.log("only shift")
                         } else if (event.modifiers & Qt.ControlModifier
                                    && event.modifiers & Qt.AltModifier) {
-                            shiftState = "CtrlAltR"
+                            __shiftState = "CtrlAltR"
                             console.log("both pressed")
                         }
                         if (event.key === Qt.Key_CapsLock) {
@@ -788,27 +784,27 @@ Item {
                             console.log("caps pressed")
                         }
                         if (event.modifiers & Qt.ShiftModifier) {
-                            shiftState = shiftState === "base" ? "shift" : "base"
+                            __shiftState = __shiftState === "base" ? "shift" : "base"
                             console.log("shift pressed")
                         }
                     }
 
     Keys.onReleased: event => {
                          if (!(event.modifiers & Qt.ShiftModifier)) {
-                             shiftState = shiftState === "base" ? "shift" : "base"
+                             __shiftState = __shiftState === "base" ? "shift" : "base"
                              console.log("shift released")
                          }
                      }
 
     */
-    onCurrentLanguageChanged: {
-        updateKeyTexts()
+    on__CurrentLanguageChanged: {
+        js_updateKeyTexts()
     }
-    onShiftStateChanged: {
-        updateKeyTexts()
+    on__ShiftStateChanged: {
+        js_updateKeyTexts()
     }
 
     Component.onCompleted: {
-        updateKeyTexts()
+        js_updateKeyTexts()
     }
 }

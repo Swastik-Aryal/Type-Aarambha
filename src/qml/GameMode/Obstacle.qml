@@ -1,14 +1,14 @@
 import QtQuick 2.0
 
 Item {
-    property bool text_visibility: true
+    property bool __textVisibility: true
 
     Text{
 
         text:"Placeholder"
         font.italic: true
         font.pixelSize: 25
-        visible:text_visibility
+        visible:__textVisibility
         anchors{
             bottom: parent.top
             horizontalCenter: parent.horizontalCenter

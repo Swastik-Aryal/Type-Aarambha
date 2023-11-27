@@ -9,4 +9,5 @@ FocusScope {
         id: _keyboardLayout
     }
 
+    TestInterface{}
 }
