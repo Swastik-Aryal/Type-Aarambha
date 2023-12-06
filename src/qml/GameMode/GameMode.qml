@@ -9,7 +9,7 @@ FocusScope {
     anchors.topMargin: -60
 
     property int __score: 0
-    property string __trialtext: "RikeshRandi"
+    property string __trialtext: "HiCutie"
     property int __currentLog: 1
 
     Image {
