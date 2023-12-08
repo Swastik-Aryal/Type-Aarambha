@@ -118,8 +118,13 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     hoverEnabled: true
                     onClicked: {
-                        _keyboardLayout.__currentLanguage = _keyboardLayout.__currentLanguage
-                                === "english" ? "nepali" : "english"
+                        if (_keyboardLayout.__currentLanguage === "english") {
+                            languageSwitcher.switchToNepali()
+                            _keyboardLayout.__currentLanguage = "nepali"
+                        } else {
+                            languageSwitcher.switchToEnglish()
+                            _keyboardLayout.__currentLanguage = "english"
+                        }
                     }
                 }
 
