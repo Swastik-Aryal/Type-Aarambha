@@ -393,6 +393,7 @@ Item {
 
     property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey]
 
+    //updates the text on the keycops
     function js_updateKeyTexts() {
         for (var i = 0; i < keyList.length; ++i) {
             var key = keyList[i]
@@ -400,6 +401,7 @@ Item {
         }
     }
 
+    //lookup dict for the characters of the keyboards
     function js_getKeyText(keyIso) {
         var translationDict = {
             "english": {
