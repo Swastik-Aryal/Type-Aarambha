@@ -713,7 +713,6 @@ Item {
             return translationDict[__currentLanguage][__shiftState][keyIso]
         }
     }
-    focus: true
 
     Keys.onPressed: {
         if (event.key === Qt.Key_Shift) {

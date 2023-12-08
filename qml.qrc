@@ -8,7 +8,7 @@
         <file alias="KeyboardLayout.qml">src/qml/PracticeMode/KeyboardLayout.qml</file>
         <file alias="Keycap.qml">src/qml/PracticeMode/Keycap.qml</file>
         <file alias="StatBar.qml">src/qml/PracticeMode/StatBar.qml</file>
-        <file alias="TestInterface.qml">src/qml/PracticeMode/TestInterface.qml</file>
+        <file alias="Lesson.qml">src/qml/PracticeMode/Lesson.qml</file>
     </qresource>
     <qresource prefix="/GameMode">
         <file alias="GameMode.qml">src/qml/GameMode/GameMode.qml</file>
