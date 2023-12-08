@@ -1,7 +1,8 @@
 QT += quick
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        src/cpp/languageswitcher.cpp
 
 resources.prefix = /$${TARGET}
 RESOURCES += \
@@ -19,5 +20,10 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+INCLUDEPATH += src/cpp
+
 HEADERS += \
-    dataset.h
+    src/cpp/languageswitcher.h \
+    src/cpp/dataset.h
+
+LIBS += -luser32
