@@ -1,6 +1,6 @@
 import QtQuick
 
-Rectangle {
+Item {
     id: _testRect
     implicitWidth: parent.width * 0.50
     implicitHeight: parent.height * 0.11
@@ -11,89 +11,100 @@ Rectangle {
         // verticalCenterOffset: parent.height / 3.5
     }
 
-    state: "testReady"
-
-    states: [
-        State {
-            name: "testReady"
-            PropertyChanges {
-                target: hintRect
-                opacity: 1.0
-            }
-            PropertyChanges {
-                target: currentTestResults
-                opacity: 0.0
-            }
-            PropertyChanges {
-                target: remainingTimeStr
-                opacity: 1.0
-            }
-        },
-        State {
-            name: "testActive"
-            PropertyChanges {
-                target: hintRect
-                opacity: 0.0
-            }
-        },
-        State {
-            name: "testFinished"
-            PropertyChanges {
-                target: restartButton
-                focus: true
-            }
-            PropertyChanges {
-                target: hintRect
-                opacity: 0.0
-            }
-            PropertyChanges {
-                target: currentTestResults
-                opacity: 1.0
-            }
-            PropertyChanges {
-                target: remainingTimeStr
-                opacity: 0.0
-            }
-        }
-    ]
-
     TextInput {
-        id: testInput
+        id: _testInput
         anchors.fill: parent
         font.pixelSize: 30
-        color: "#fae1c3"
+        font.family: _Baloo2.name
+        color: "#CCCCB5"
         focus: true
         activeFocusOnTab: true
-        visible: parent.state !== "testFinished"
 
-        property bool keystrokeIsPrintable: false
-        property bool backspacePressed: false
-        property bool spacePressed: false
-        Keys.onPressed: event => {
-                            keystrokeIsPrintable = event.text.length > 0
-                            backspacePressed = event.key === Qt.Key_Backspace
-                            spacePressed = event.key === Qt.Key_Space
-                        }
-        // called after Keys.onPressed callback
-        onTextEdited: {
-            if (Lesson.state === "testReady" && keystrokeIsPrintable) {
-                // start the test automatically
-                // when the user starts typing
-                Lesson.state = "testActive"
-            }
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Shift) {
+                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState
+                        === "shift" ? "base" : "shift"
+            } else if (event.key === Qt.Key_CapsLock) {
+                _keyboardLayout.__capsLockPressed = !_keyboardLayout.__capsLockPressed
 
-            if (Lesson.state === "testActive") {
-                if (keystrokeIsPrintable || spacePressed || backspacePressed) {
-                    // track progress and update test prompt
-                    typingTest.processKbInput(testInput.text, backspacePressed,
-                                              spacePressed)
-
-                    // clear input field if the user finished typing the current word
-                    if (spacePressed) {
-                        testInput.text = ""
-                    }
+                if (_keyboardLayout.__capsLockPressed) {
+                    _keyboardLayout.__shiftState = "shift"
+                } else {
+                    _keyboardLayout.__shiftState = "base"
                 }
             }
+
+            if (event.modifiers & Qt.ShiftModifier
+                    && event.modifiers & Qt.AltModifier
+                    && event.modifiers & Qt.ControlModifier) {
+                _keyboardLayout.__shiftState = "shiftCtrlAlt"
+            } else if (!(event.modifiers & Qt.ShiftModifier)
+                       && event.modifiers & Qt.AltModifier
+                       && event.modifiers & Qt.ControlModifier) {
+                _keyboardLayout.__shiftState = "base"
+            } else if (event.modifiers & Qt.ShiftModifier
+                       && !(event.modifiers & Qt.AltModifier)
+                       && event.modifiers & Qt.ControlModifier) {
+                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState
+                        === "shift" ? "base" : "shift"
+            } else if (event.modifiers & Qt.ShiftModifier
+                       && (event.modifiers & Qt.AltModifier)
+                       && !(event.modifiers & Qt.ControlModifier)) {
+                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState
+                        === "shift" ? "base" : "shift"
+            }
         }
+
+        // Handle key release events
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Shift) {
+                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState
+                        === "shift" ? "base" : "shift"
+            }
+        }
+
+
+        /*
+        Keys.onPressed: event => {
+                            if (event.modifiers & Qt.NoModifier) {
+                                key_pressed = true
+                            }
+                            if (caps_pressed === true) {
+                                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState === "shift" ? "base" : "shift"
+                            }
+
+
+                            /*if (event.modifiers & Qt.ShiftModifier
+                                && event.modifiers & Qt.AltModifier
+                                && event.modifiers & Qt.ControlModifier) {
+                                _keyboardLayout.__shiftState = "shiftCtrlAlt"
+                                console.log("both pressed")
+                            } else if (event.modifiers & Qt.ShiftModifier) {
+                                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState === "base" ? "shift" : "base"
+                                console.log("only shift")
+                            } else if (event.modifiers & Qt.ControlModifier
+                                       && event.modifiers & Qt.AltModifier) {
+                                _keyboardLayout.__shiftState = "CtrlAltR"
+                                console.log("both pressed")
+                            }
+                            if (event.key === Qt.Key_CapsLock) {
+
+                                caps_pressed = caps_pressed === true ? false : true
+                                console.log("caps pressed")
+                            }
+                            if (event.modifiers & Qt.ShiftModifier) {
+                                _keyboardLayout.__shiftState = _keyboardLayout.__shiftState === "base" ? "shift" : "base"
+                                console.log("shift pressed")
+                            }
+                        }
+
+        Keys.onReleased: event => {
+                             if (!(event.modifiers & Qt.ShiftModifier)) {
+                                 _keyboardLayout.__shiftState = _keyboardLayout.__shiftState === "base" ? "shift" : "base"
+                                 console.log("shift released")
+                             }
+                         }
+
+        */
     }
 }
