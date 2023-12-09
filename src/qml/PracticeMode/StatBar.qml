@@ -10,9 +10,8 @@ Rectangle {
 
     // Center within its parent
     anchors {
-        horizontalCenter: parent.horizontalCenter
-        verticalCenter: parent.verticalCenter
-        verticalCenterOffset: -parent.height / 5
+        centerIn: parent
+        verticalCenterOffset: -parent.height / 4.5
     }
     color: "#151A21"
     radius: 15
@@ -118,12 +117,16 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     hoverEnabled: true
                     onClicked: {
+                        lessonObj.setCurrentLanguage(
+                                    _keyboardLayout.__currentLanguage)
                         if (_keyboardLayout.__currentLanguage === "english") {
                             languageSwitcher.switchToNepali()
                             _keyboardLayout.__currentLanguage = "nepali"
+                            __lessonFont = _NotoSansDevanagari.name
                         } else {
                             languageSwitcher.switchToEnglish()
                             _keyboardLayout.__currentLanguage = "english"
+                            __lessonFont = _NotoSansMono.name
                         }
                     }
                 }
