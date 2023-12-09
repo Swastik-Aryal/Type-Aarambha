@@ -1,7 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include "src/cpp/dataset.h"
 #include "src/cpp/languageswitcher.h"
+#include "src/cpp/lesson.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,9 +11,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    // Expose LanguageSwitcher to QML
     LanguageSwitcher languageSwitcher;
     engine.rootContext()->setContextProperty("languageSwitcher", &languageSwitcher);
+
+    Lesson *lessonObj = new Lesson(worddDataset, 25, &app);
+    engine.rootContext()->setContextProperty("lessonObj", lessonObj);
 
     const QUrl url(u"qrc:/main.qml"_qs);
     QObject::connect(

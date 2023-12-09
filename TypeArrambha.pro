@@ -2,7 +2,8 @@ QT += quick
 
 SOURCES += \
         main.cpp \
-        src/cpp/languageswitcher.cpp
+        src/cpp/languageswitcher.cpp \
+        src/cpp/lesson.cpp
 
 resources.prefix = /$${TARGET}
 RESOURCES += \
@@ -24,6 +25,7 @@ INCLUDEPATH += src/cpp
 
 HEADERS += \
     src/cpp/languageswitcher.h \
-    src/cpp/dataset.h
+    src/cpp/dataset.h \
+    src/cpp/lesson.h
 
 LIBS += -luser32
