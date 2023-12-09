@@ -42,6 +42,9 @@ ApplicationWindow {
         source: "qrc:/assets/assets/fonts/Baloo2.ttf"
     }
 
+    //font for prompt and user input
+    property string __lessonFont: _NotoSansMono.name
+
     // Practice Mode
     PracticeMode {
         id: _practiceMode
