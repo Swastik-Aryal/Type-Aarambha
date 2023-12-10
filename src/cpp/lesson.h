@@ -19,7 +19,7 @@ public:
     QString textPrompt() const;
     QString getCurrentLanguage() const;
     Q_INVOKABLE void reset();
-    Q_INVOKABLE void processKbInput(const QString &input, bool backspacePressed, bool spacePressed);
+    Q_INVOKABLE void processKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode);
     Q_INVOKABLE unsigned calculateWPM(unsigned testTimeSec) const;
     Q_INVOKABLE unsigned calculateAccuracy() const;
 
@@ -29,7 +29,7 @@ public slots:
 
 private:
     bool newCharIsCorrect(const QString &currentWord, const QString &input) const;
-    void setCurrentWordColor(const QString &currentWord, const QString &input);
+    void setCurrentWordColor(const QString &currentWord, const QString &input, const QString &currentMode);
     void sampleWordDataset();
     void updateTextPrompt(bool initialize);
 

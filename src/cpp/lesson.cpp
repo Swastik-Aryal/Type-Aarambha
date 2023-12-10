@@ -54,8 +54,13 @@ bool Lesson::newCharIsCorrect(const QString &currentWord, const QString &input) 
  * - Go to the next word if space was pressed.
  * - Load new word sample if all words in the current sample were typed.
  */
-void Lesson::processKbInput(const QString &input, bool backspacePressed, bool spacePressed)
+void Lesson::processKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode)
 {
+    // mode true means lesson
+    QString initialcolor="white";
+    if (currentMode == "game"){
+        initialcolor = "black";
+    }
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
     QString wordColor;
     bool resetTextPrompt = false;
@@ -73,7 +78,7 @@ void Lesson::processKbInput(const QString &input, bool backspacePressed, bool sp
         QStringView typedWord(input.constData(), input.size() - 1);
         if (typedWord == currentLessonWord) {
             m_totalAcceptedChars += input.size();
-            wordColor = "#fae1c3";
+            wordColor = initialcolor;
         } else {
             wordColor = "#bb1e10";
         }
@@ -91,7 +96,7 @@ void Lesson::processKbInput(const QString &input, bool backspacePressed, bool sp
     } else {
         /* Set color for each typed letter of current word,
          * depending on correctness. */
-        setCurrentWordColor(currentLessonWord, input);
+        setCurrentWordColor(currentLessonWord, input, currentMode);
     }
     updateTextPrompt(resetTextPrompt);
 }
@@ -101,13 +106,18 @@ void Lesson::processKbInput(const QString &input, bool backspacePressed, bool sp
  *  - for typed letters choose color (white/red) depending on correctness
  *  - keep default color (gray, defined in TestInterface.qml) if the letter wasn't typed yet
  */
-void Lesson::setCurrentWordColor(const QString &currentWord, const QString &userInput)
+void Lesson::setCurrentWordColor(const QString &currentWord, const QString &userInput, const QString &currentMode)
 {
+
+    QString initialcolor="white";
+    if (currentMode == "game"){
+        initialcolor = "black";
+    }
     unsigned numTypedChars = std::min(currentWord.size(), userInput.size());
     unsigned numUntypedChars = currentWord.size() - numTypedChars;
     m_textPromptCurrentWord.clear();
     for (unsigned i = 0; i < numTypedChars; i++) {
-        QString color = "#CCCCB5";
+        QString color = initialcolor;
         if (userInput[i] != currentWord[i]) {
             color = "#B81B2C";
         }

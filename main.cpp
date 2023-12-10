@@ -17,6 +17,11 @@ int main(int argc, char *argv[])
     Lesson *lessonObj = new Lesson(worddDataset, 25, &app);
     engine.rootContext()->setContextProperty("lessonObj", lessonObj);
 
+    Lesson *gameObj = new Lesson(worddDataset,1,&app);
+    engine.rootContext()->setContextProperty("gameObj", gameObj);
+
+
+
     const QUrl url(u"qrc:/main.qml"_qs);
     QObject::connect(
         &engine,
