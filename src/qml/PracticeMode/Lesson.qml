@@ -80,11 +80,12 @@ Item {
             anchors.centerIn: parent
             font.family: __lessonFont
             font.pixelSize: 22
-            color: "#CCCCB5"
+            color: "transparent"
+            cursorVisible: false
             focus: true
             activeFocusOnTab: true
 
-            visible: parent.state !== "LessonFinished"
+            visible: false
 
             property bool keystrokeIsPrintable: false
             property bool backspacePressed: false
@@ -107,7 +108,8 @@ Item {
                             || backspacePressed) {
                         // track progress and update test prompt
                         lessonObj.processKbInput(_textInput.text,
-                                                 backspacePressed, spacePressed)
+                                                 backspacePressed,
+                                                 spacePressed, "lesson")
 
                         // clear input field if the user finished typing the current word
                         if (spacePressed) {

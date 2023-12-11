@@ -5,6 +5,7 @@
 #include <random>
 #include <string>
 #include <vector>
+#include <iostream>
 
 class Lesson : public QObject
 {
@@ -12,14 +13,17 @@ class Lesson : public QObject
     Q_PROPERTY(QString textPrompt READ textPrompt NOTIFY textPromptChanged)
     Q_PROPERTY(QString currentLanguage READ getCurrentLanguage WRITE setCurrentLanguage NOTIFY
                    currentLanguageChanged)
+
+
 public:
     explicit Lesson(const std::vector<std::vector<QString>> &wordDataset,
                     unsigned wordsPerSample,
                     QObject *parent = nullptr);
     QString textPrompt() const;
     QString getCurrentLanguage() const;
+
     Q_INVOKABLE void reset();
-    Q_INVOKABLE void processKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode);
+    Q_INVOKABLE bool processgameKbInput(QString input, bool backspacePressed, bool spacePressed, const QString &currentMode);
     Q_INVOKABLE unsigned calculateWPM(unsigned testTimeSec) const;
     Q_INVOKABLE unsigned calculateAccuracy() const;
 
@@ -37,6 +41,7 @@ private:
     unsigned m_wordsPerSample = 0;
     unsigned m_correctChars = 0;
     unsigned m_totalTypedChars = 0;
+    unsigned m_incorrect_chars=0;
     unsigned m_totalAcceptedChars = 0; /* for calculating WPM */
 
     /* formated string (color) containing the current test word sample. */
