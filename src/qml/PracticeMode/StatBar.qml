@@ -8,6 +8,10 @@ Rectangle {
     implicitWidth: parent.width * 0.47
     implicitHeight: parent.height * 0.065
 
+    property real __wpm: 0
+    property real __accuracy: 0
+    property real __correctChars: 0
+    property real __incorrectChars: 0
     // Center within its parent
     anchors {
         centerIn: parent
@@ -102,7 +106,7 @@ Rectangle {
 
                         Text {
                             id: _langSelect
-                            text: _keyboardLayout.__currentLanguage
+                            text: __currentLanguage
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -117,15 +121,14 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     hoverEnabled: true
                     onClicked: {
-                        lessonObj.setCurrentLanguage(
-                                    _keyboardLayout.__currentLanguage)
-                        if (_keyboardLayout.__currentLanguage === "english") {
+                        lessonObj.setCurrentLanguage(__currentLanguage)
+                        if (__currentLanguage === "english") {
                             languageSwitcher.switchToNepali()
-                            _keyboardLayout.__currentLanguage = "nepali"
+                            __currentLanguage = "nepali"
                             __lessonFont = _NotoSansDevanagari.name
                         } else {
                             languageSwitcher.switchToEnglish()
-                            _keyboardLayout.__currentLanguage = "english"
+                            __currentLanguage = "english"
                             __lessonFont = _NotoSansMono.name
                         }
                     }
@@ -171,7 +174,7 @@ Rectangle {
                         Layout.preferredWidth: 0.8
 
                         Text {
-                            text: "88.8"
+                            text: __wpm
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -188,7 +191,7 @@ Rectangle {
 
                 Tooltip {
                     visible: _wpmMouseArea.containsMouse
-                    __ttText: "88.8 words per minute"
+                    __ttText: __wpm + " words per minute"
                 }
             }
 
@@ -226,7 +229,7 @@ Rectangle {
                         Layout.preferredWidth: 0.8
 
                         Text {
-                            text: "88.8%"
+                            text: __accuracy + "%"
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -244,7 +247,7 @@ Rectangle {
 
                 Tooltip {
                     visible: _accMouseArea.containsMouse
-                    __ttText: "88.8% accuracy"
+                    __ttText: __accuracy + "% accuracy"
                 }
             }
 
@@ -283,7 +286,7 @@ Rectangle {
                         Layout.preferredWidth: 1
 
                         Text {
-                            text: "188 / 88"
+                            text: __correctChars + " / " + __incorrectChars
                             font.family: _NotoSansRegular.name
                             font.pixelSize: parent.height * 0.48
                             color: "#4B5975"
@@ -301,7 +304,7 @@ Rectangle {
 
                 Tooltip {
                     visible: _charMouseArea.containsMouse
-                    __ttText: "188 correct / 88 incorrect"
+                    __ttText: __correctChars + " correct / " + __incorrectChars + " incorrect"
                 }
             }
 

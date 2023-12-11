@@ -8,6 +8,14 @@ FocusScope {
     KeyboardLayout {
         id: _keyboardLayout
     }
+    function js_updateKeyTexts() {
+        _keyboardLayout.js_updateKeyTexts()
+    }
+    Lesson {
+        id: _lessonInterface
+    }
 
-    Lesson {}
+    function js_finishLesson() {
+        _lessonInterface.js_finishLesson()
+    }
 }

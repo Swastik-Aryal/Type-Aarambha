@@ -4,7 +4,6 @@ import QtQuick.Layouts
 // Main Item containing the keyboard layout
 Item {
 
-    property string __currentLanguage: "english"
     property string __shiftState: "base"
     property bool __capsLockPressed: false
 
@@ -798,9 +797,6 @@ Item {
                      }
 
     */
-    on__CurrentLanguageChanged: {
-        js_updateKeyTexts()
-    }
     on__ShiftStateChanged: {
         js_updateKeyTexts()
     }
