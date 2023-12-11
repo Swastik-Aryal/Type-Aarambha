@@ -24,6 +24,7 @@ void Lesson::reset()
     m_correctChars = 0;
     m_totalTypedChars = 0;
     m_totalAcceptedChars = 0;
+    m_lessonEnded = false;
     sampleWordDataset();
     updateTextPrompt(true);
 
@@ -55,11 +56,70 @@ bool Lesson::newCharIsCorrect(const QString &currentWord, const QString &input) 
  * - Go to the next word if space was pressed.
  * - Load new word sample if all words in the current sample were typed.
  */
-bool Lesson::processgameKbInput(QString input, bool backspacePressed, bool spacePressed, const QString &currentMode)
+void Lesson::processKbInput(const QString &input,
+                            bool backspacePressed,
+                            bool spacePressed,
+                            const QString &currentMode)
 {
     // mode true means lesson
-    QString initialcolor="white";
+    QString initialcolor = "#CCCCB5";
     if (currentMode == "game"){
+        initialcolor = "black";
+    }
+    const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
+    QString wordColor;
+    bool resetTextPrompt = false;
+
+    /* Update character counts only if keypress was not backspace. */
+    if (!backspacePressed) {
+        if (newCharIsCorrect(currentLessonWord, input)) {
+            m_correctChars++;
+            if (m_currentWordIdx + 1 == m_wordsPerSample && input == currentLessonWord) {
+                endLesson();
+            }
+        }
+        m_totalTypedChars++;
+    }
+    if (spacePressed) {
+        /* Update accepted character count, set color for typed word
+         * and change active word in test prompt. */
+        QStringView typedWord(input.constData(), input.size() - 1);
+        if (typedWord == currentLessonWord) {
+            m_totalAcceptedChars += input.size();
+            wordColor = initialcolor;
+        } else {
+            wordColor = "#B81B2C";
+        }
+        m_textPromptFinished.append(
+            QString("<font color='%1'>%2 </font>").arg(wordColor, currentLessonWord));
+        m_currentWordIdx++;
+        if (m_currentWordIdx == m_wordsPerSample) {
+            sampleWordDataset();
+            resetTextPrompt = true;
+            endLesson();
+        } else {
+            const QString &nextTestWord = m_currentWordSample[m_currentWordIdx];
+            m_textPromptCurrentWord = QString("<u>%1</u>").arg(nextTestWord);
+            m_textPromptUntyped.remove(0, nextTestWord.size() + 1);
+        }
+
+    } else {
+        /* Set color for each typed letter of current word,
+         * depending on correctness. */
+        setCurrentWordColor(currentLessonWord, input, currentMode);
+        keyboardHint(currentLessonWord);
+    }
+    updateTextPrompt(resetTextPrompt);
+}
+
+bool Lesson::processgameKbInput(QString input,
+                                bool backspacePressed,
+                                bool spacePressed,
+                                const QString &currentMode)
+{
+    // mode true means lesson
+    QString initialcolor = "white";
+    if (currentMode == "game") {
         initialcolor = "black";
     }
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
@@ -90,7 +150,6 @@ bool Lesson::processgameKbInput(QString input, bool backspacePressed, bool space
             m_textPromptUntyped.remove(0, nextTestWord.size() + 1);
         }
 
-
     } else {
         /* Set color for each typed letter of current word,
          * depending on correctness. */
@@ -103,12 +162,11 @@ bool Lesson::processgameKbInput(QString input, bool backspacePressed, bool space
 /*
  * Color each letter of the current word:
  *  - for typed letters choose color (white/red) depending on correctness
- *  - keep default color (gray, defined in TestInterface.qml) if the letter wasn't typed yet
+ *  - keep default color gray if the letter wasn't typed yet
  */
 void Lesson::setCurrentWordColor(const QString &currentWord, const QString &userInput, const QString &currentMode)
 {
-
-    QString initialcolor="white";
+    QString initialcolor = "#CCCCB5";
     if (currentMode == "game"){
         initialcolor = "black";
     }
@@ -127,6 +185,8 @@ void Lesson::setCurrentWordColor(const QString &currentWord, const QString &user
     m_textPromptCurrentWord.append(QStringView(currentWord).right(numUntypedChars));
     m_textPromptCurrentWord = QString("<u>%1</u>").arg(m_textPromptCurrentWord);
 }
+
+void Lesson::keyboardHint(const QString &currentWord) {}
 
 /*
  * textPrompt contains a sample of words that the user should type.
@@ -150,6 +210,17 @@ void Lesson::setCurrentLanguage(const QString &language)
         reset();
         emit currentLanguageChanged();
     }
+}
+
+void Lesson::endLesson()
+{
+    m_lessonEnded = true;
+    emit lessonEndedChanged();
+}
+
+bool Lesson::lessonEnded() const
+{
+    return m_lessonEnded;
 }
 
 void Lesson::updateTextPrompt(bool initialize = false)
@@ -176,14 +247,24 @@ void Lesson::updateTextPrompt(bool initialize = false)
  * Calculate the number of correctly typed words per minute.
  * Assume average word length is 5 like on most typing websites.
  */
-unsigned Lesson::calculateWPM(unsigned testTimeSec) const
+float Lesson::calculateWPM(unsigned lessonDuration) const
 {
-    float wpm = static_cast<float>(m_totalAcceptedChars) / 5 * 60. / testTimeSec;
-    return static_cast<unsigned>(wpm);
+    float wpm = static_cast<float>(m_totalAcceptedChars) / 5 * 60. / (lessonDuration / 1000);
+    return (wpm);
 }
 
-unsigned Lesson::calculateAccuracy() const
+float Lesson::calculateAccuracy() const
 {
     float acc = static_cast<float>(m_correctChars) / m_totalTypedChars;
-    return static_cast<unsigned>(acc * 100);
+    return (acc * 100);
+}
+
+unsigned Lesson::getCorrectChars() const
+{
+    return m_correctChars;
+}
+
+unsigned Lesson::getTotalTypedChars() const
+{
+    return m_totalTypedChars;
 }

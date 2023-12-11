@@ -20,8 +20,6 @@ int main(int argc, char *argv[])
     Lesson *gameObj = new Lesson(worddDataset,1,&app);
     engine.rootContext()->setContextProperty("gameObj", gameObj);
 
-
-
     const QUrl url(u"qrc:/main.qml"_qs);
     QObject::connect(
         &engine,

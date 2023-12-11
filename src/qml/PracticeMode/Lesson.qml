@@ -3,10 +3,10 @@ import QtQuick
 Item {
     id: _lesson
     state: "LessonReady"
-    property int __lessonDuration
+    property int __lessonDuration: 0
 
     implicitWidth: parent.width * 0.60
-    implicitHeight: parent.height * 0.22
+    implicitHeight: parent.height * 0.24
 
     anchors {
         centerIn: parent
@@ -19,49 +19,52 @@ Item {
         },
         State {
             name: "LessonActive"
-        },
-        State {
-            name: "LessonFinished"
         }
     ]
 
-    function finishLesson() {
-        lesson.state = "LessonFinished"
+    function js_finishLesson() {
         _textInput.clear()
-    }
-
-    function restartLesson() {
-        lesson.testDuration = lesson.nextTestDuration
-        remainingTime = lesson.testDuration
-        lesson.state = "LessonReady"
-        _textInput.text = ""
+        __lessonDuration = 0
+        _lesson.state = "LessonReady"
         _textInput.focus = true
         lessonObj.reset()
     }
 
-    function finishTest() {
-        lesson.state = "LessonFinished"
-        _textInput.clear()
+    Timer {
+        id: _lessonTimer
+        interval: 1
+        repeat: true
+        running: _lesson.state === "LessonActive"
+        onTriggered: {
+            __lessonDuration += 1
+
+            if (lessonObj.lessonEnded) {
+                _lessonTimer.stop()
+                _statBar.__wpm = lessonObj.calculateWPM(
+                            __lessonDuration).toFixed(1)
+                _statBar.__accuracy = lessonObj.calculateAccuracy().toFixed(1)
+                _statBar.__correctChars = lessonObj.getCorrectChars()
+                _statBar.__incorrectChars = (lessonObj.getTotalTypedChars(
+                                                 ) - lessonObj.getCorrectChars(
+                                                 ))
+                _lesson.js_finishLesson()
+            }
+        }
     }
 
-    function restartTest() {
-        lesson.testDuration = lesson.nextTestDuration
-        remainingTime = lesson.testDuration
-        lesson.state = "LessonReady"
-        _textInput.text = ""
-        _textInput.focus = true
-        lessonObj.reset()
-    }
     Text {
         id: _textPrompt
 
         anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width
 
         text: lessonObj.textPrompt
         color: "#4B5975"
         font.family: __lessonFont
-        font.pixelSize: 22
+        font.pixelSize: 24
+        font.weight: 550
+        font.letterSpacing: 1
         wrapMode: Text.WordWrap
     }
 
@@ -79,13 +82,12 @@ Item {
             id: _textInput
             anchors.centerIn: parent
             font.family: __lessonFont
-            font.pixelSize: 22
-            color: "transparent"
-            cursorVisible: false
+            font.pixelSize: 24
+            font.weight: 550
+            font.letterSpacing: 1
+            color: "#CCCCB5"
             focus: true
             activeFocusOnTab: true
-
-            visible: false
 
             property bool keystrokeIsPrintable: false
             property bool backspacePressed: false
