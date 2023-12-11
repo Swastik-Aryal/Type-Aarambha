@@ -45,6 +45,13 @@ ApplicationWindow {
     //font for prompt and user input
     property string __lessonFont: _NotoSansMono.name
 
+    //curent language
+    property string __currentLanguage: "english"
+    on__CurrentLanguageChanged: {
+        _practiceMode.js_updateKeyTexts()
+        _practiceMode.js_finishLesson()
+    }
+
     // Practice Mode
     PracticeMode {
         id: _practiceMode
