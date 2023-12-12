@@ -6,6 +6,10 @@ Item {
     property int __lessonDuration: 0
     property alias __inputText: _textInput.text
 
+    property bool keystrokeIsPrintable: false
+    property bool backspacePressed: false
+    property bool spacePressed: false
+
     implicitWidth: parent.width * 0.60
     implicitHeight: parent.height * 0.24
 
@@ -89,10 +93,6 @@ Item {
             color: "#CCCCB5"
             focus: true
             activeFocusOnTab: true
-
-            property bool keystrokeIsPrintable: false
-            property bool backspacePressed: false
-            property bool spacePressed: false
             Keys.onPressed: event => {
                                 keystrokeIsPrintable = event.text.length > 0
                                 backspacePressed = event.key === Qt.Key_Backspace

@@ -29,7 +29,7 @@ public:
                                     bool spacePressed,
                                     const QString &currentMode);
     Q_INVOKABLE void processgameKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode);
-    Q_INVOKABLE QString getNextCharacter(const QString &input) const;
+    Q_INVOKABLE QString getNextCharacter(const QString &userInput, bool spacePressed) const;
     Q_INVOKABLE float calculateWPM(unsigned lessonDuration) const;
     Q_INVOKABLE float calculateAccuracy() const;
     Q_INVOKABLE unsigned getCorrectChars() const;
@@ -48,12 +48,14 @@ private:
     unsigned m_correctChars = 0;
     unsigned m_totalTypedChars = 0;
     unsigned m_totalAcceptedChars = 0; /* for calculating WPM */
+    unsigned m_nextCharacterIndex = 1;
 
     /* formated string (color) containing the current test word sample. */
     QString m_textPrompt;
     QString m_textPromptFinished; /* Completed words in the current sample, so far */
     QString m_textPromptCurrentWord;
     QString m_textPromptUntyped;
+    QString m_nextCharacter;
 
     bool m_lessonEnded = false;
 

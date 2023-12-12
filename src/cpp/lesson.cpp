@@ -24,6 +24,7 @@ void Lesson::reset()
     m_correctChars = 0;
     m_totalTypedChars = 0;
     m_totalAcceptedChars = 0;
+    m_nextCharacterIndex = 0;
     m_lessonEnded = false;
     sampleWordDataset();
     updateTextPrompt(true);
@@ -68,7 +69,6 @@ void Lesson::processKbInput(const QString &input,
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
     QString wordColor;
     bool resetTextPrompt = false;
-
 
     /* Update character counts only if keypress was not backspace. */
     if (!backspacePressed) {
@@ -175,17 +175,18 @@ void Lesson::setCurrentWordColor(const QString &currentWord, const QString &user
 /*
  * returns the character that the user is supposed to type next
  */
-QString Lesson::getNextCharacter(const QString &input) const
+QString Lesson::getNextCharacter(const QString &userInput, bool spacePressed) const
 {
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
-    if (input.length() < currentLessonWord.length()) {
-        return currentLessonWord.at(input.length());
-    } else if (input.length() == currentLessonWord.length()) {
-        return "space";
-    } else if (input.length() > currentLessonWord.length()) {
+
+    if (spacePressed) {
         return currentLessonWord.at(0);
     } else {
-        return "dont know";
+        if (userInput.length() < currentLessonWord.length()) {
+            return currentLessonWord.at(userInput.length());
+        } else {
+            return "space";
+        }
     }
 }
 
