@@ -717,7 +717,6 @@ Item {
         var nextCharacter = lessonObj.getNextCharacter(
                     _lessonInterface.__inputText, _lessonInterface.spacePressed)
         var keyIso
-        console.log("next char: " + nextCharacter)
 
         keyIso = js_getKeyIso(nextCharacter)
 
