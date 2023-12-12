@@ -365,6 +365,7 @@ Item {
             }
             Keycap {
                 id: _spacebarKey
+                __iso: "A03"
                 width: __keyWidth * 6.65
                 __keyText: ""
                 Rectangle {
@@ -442,7 +443,8 @@ Item {
                 "B07": "m",
                 "B08": ",",
                 "B09": ".",
-                "B10": "/"
+                "B10": "/",
+                "A03": "space"
             },
             "shift": {
                 "E00": "~",
@@ -492,7 +494,8 @@ Item {
                 "B07": "M",
                 "B08": "<",
                 "B09": ">",
-                "B10": "?"
+                "B10": "?",
+                "A03": "space"
             }
         },
         "nepali": {
@@ -543,7 +546,8 @@ Item {
                 "B07": "फ",
                 "B08": ",",
                 "B09": "।",
-                "B10": "र"
+                "B10": "र",
+                "A03": "space"
             },
             "shift": {
                 "E00": "ञ\u{94D}",
@@ -593,7 +597,8 @@ Item {
                 "B07": "\u{903}",
                 "B08": "?",
                 "B09": "श\u{94D}र",
-                "B10": "र\u{942}"
+                "B10": "र\u{942}",
+                "A03": "space"
             },
             "CtrlAltR": {
                 "E00": "",
@@ -643,7 +648,8 @@ Item {
                 "B07": "",
                 "B08": "",
                 "B09": "",
-                "B10": ""
+                "B10": "",
+                "A03": "space"
             },
             "shiftCtrlAlt": {
                 "E00": "",
@@ -693,7 +699,8 @@ Item {
                 "B07": "",
                 "B08": "",
                 "B09": "",
-                "B10": ""
+                "B10": "",
+                "A03": "space"
             }
         }
     }
@@ -708,17 +715,12 @@ Item {
 
     function js_updateKeyboardHint() {
         var nextCharacter = lessonObj.getNextCharacter(
-                    _lessonInterface.__inputText)
+                    _lessonInterface.__inputText, _lessonInterface.spacePressed)
         var keyIso
         console.log("next char: " + nextCharacter)
 
-        switch (nextCharacter) {
-        case "space":
-            keyIso = _spacebarKey
-            break
-        default:
-            keyIso = js_getKeyIso(nextCharacter)
-        }
+        keyIso = js_getKeyIso(nextCharacter)
+
         for (var i = 0; i < keyList.length; ++i) {
             var key = keyList[i]
             if (key.__lightSwitch === true) {
