@@ -188,6 +188,7 @@ FocusScope {
 
         //for blureffect after death
         Rectangle {
+            id: _wrong
             color: "red"
             opacity: 0.5
             visible: wrongchar
@@ -566,21 +567,22 @@ FocusScope {
         AnimatedImage {
 
             id: _player
-            source: "qrc:/assets/assets/img/images-gamemode/giphy1.gif"
+            source: "qrc:/assets/assets/img/images-gamemode/gamerobot.gif"
             mirror: false
-            width: 300
-            height: 260
+            width: 310
+            height: 364
+            scale: 0.46
             //x:_log1.x-20 ; y:_log1.y-160
             anchors {
                 bottom: _log1.top
                 horizontalCenter: _log1.horizontalCenter
-                bottomMargin: -100
+                bottomMargin: -135
             }
 
             ScaleAnimator {
                 id: _scaler1
                 target: _player
-                from: 1
+                from: 0.46
                 to: 0
                 duration: 500
                 running: false
@@ -589,7 +591,7 @@ FocusScope {
                 id: _scaler2
                 target: _player
                 from: 0
-                to: 1
+                to: 0.46
                 duration: 500
                 running: false
             }
@@ -635,6 +637,7 @@ FocusScope {
                 _textInput.focus = true
                 gameObj.reset()
             }
+
             Timer {
                 id: timeoutTimer
                 interval: 250
@@ -644,11 +647,11 @@ FocusScope {
                     wrongchar = false
                 }
             }
+
             function wrong() {
                 wrongchar = true
                 timeoutTimer.start()
             }
-
             Keys.onPressed: event => {
 
                                 if (event.key === Qt.Key_Backspace) {
@@ -682,17 +685,18 @@ FocusScope {
                                     ) - gameObj.getCorrectChars()
                         if (liveslost != 0 && liveslosttotal !== liveslost) {
                             liveslosttotal += 1
+
                             if (liveslosttotal === 1 || liveslosttotal === 2) {
                                 wrong()
                             }
                         }
 
                         if (liveslosttotal === 3) {
+                            wrongchar = true
                             live3_visible = false
+                            res_visibility = true
 
                             _lesson = "LessonEnded"
-                            res_visibility = true
-                            wrongchar = true
                         } else {
 
                             if (liveslosttotal == 1) {

@@ -10,8 +10,9 @@
         <file>assets/img/keyboard-solid-off.svg</file>
         <file>assets/img/keyboard-solid-on.svg</file>
         <file>assets/img/images-gamemode/cloudyforest.jpg</file>
-        <file>assets/img/images-gamemode/giphy1.gif</file>
+        <file>assets/img/images-gamemode/gamerobot.gif</file>
         <file>assets/img/images-gamemode/live.png</file>
         <file>assets/img/images-gamemode/stick.png</file>
+
     </qresource>
 </RCC>
