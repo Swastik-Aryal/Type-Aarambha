@@ -582,7 +582,7 @@ FocusScope {
                 target: _player
                 from: 1
                 to: 0
-                duration: 1000
+                duration: 500
                 running: false
             }
             ScaleAnimator {
@@ -590,7 +590,7 @@ FocusScope {
                 target: _player
                 from: 0
                 to: 1
-                duration: 1000
+                duration: 500
                 running: false
             }
         }
