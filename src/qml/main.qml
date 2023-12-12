@@ -44,6 +44,8 @@ ApplicationWindow {
 
     //font for prompt and user input
     property string __lessonFont: _NotoSansMono.name
+    property int __lessonFontSize: 24
+    property int __lessonFontSpacing: 1
 
     //curent language
     property string __currentLanguage: "english"

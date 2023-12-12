@@ -126,10 +126,14 @@ Rectangle {
                             languageSwitcher.switchToNepali()
                             __currentLanguage = "nepali"
                             __lessonFont = _NotoSansDevanagari.name
+                            __lessonFontSize = 30
+                            __lessonFontSpacing = 3
                         } else {
                             languageSwitcher.switchToEnglish()
                             __currentLanguage = "english"
                             __lessonFont = _NotoSansMono.name
+                            __lessonFontSize = 24
+                            __lessonFontSpacing = 1
                         }
                     }
                 }
