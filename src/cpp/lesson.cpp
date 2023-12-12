@@ -70,6 +70,7 @@ void Lesson::processKbInput(const QString &input,
     QString wordColor;
     bool resetTextPrompt = false;
 
+
     /* Update character counts only if keypress was not backspace. */
     if (!backspacePressed) {
         if (newCharIsCorrect(currentLessonWord, input)) {
@@ -112,7 +113,7 @@ void Lesson::processKbInput(const QString &input,
     updateTextPrompt(resetTextPrompt);
 }
 
-bool Lesson::processgameKbInput(QString input,
+void Lesson::processgameKbInput(const QString &input,
                                 bool backspacePressed,
                                 bool spacePressed,
                                 const QString &currentMode)
@@ -125,6 +126,7 @@ bool Lesson::processgameKbInput(QString input,
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
 
     bool resetTextPrompt = false;
+    m_lessonEnded = false;
 
     /* Update character counts only if keypress was not backspace. */
     if (!backspacePressed) {
@@ -133,30 +135,17 @@ bool Lesson::processgameKbInput(QString input,
         }
         m_totalTypedChars++;
     }
-    if (currentLessonWord.size() == input.size()) {
-        /* Update accepted character count, set color for typed word
-         * and change active word in test prompt. */
+    if (m_currentWordIdx + 1 == m_wordsPerSample && input.size() == currentLessonWord.size()){
+        endLesson();
+        sampleWordDataset();
+        resetTextPrompt = true;
 
-        m_currentWordIdx++;
-        if (m_currentWordIdx == m_wordsPerSample) {
-            sampleWordDataset();
-            resetTextPrompt = true;
-            updateTextPrompt(resetTextPrompt);
-            return true;
-
-        } else {
-            const QString &nextTestWord = m_currentWordSample[m_currentWordIdx];
-            m_textPromptCurrentWord = QString("<u>%1</u>").arg(nextTestWord);
-            m_textPromptUntyped.remove(0, nextTestWord.size() + 1);
-        }
-
-    } else {
-        /* Set color for each typed letter of current word,
-         * depending on correctness. */
-        setCurrentWordColor(currentLessonWord, input, currentMode);
     }
+
+    setCurrentWordColor(currentLessonWord, input, currentMode);
+
     updateTextPrompt(resetTextPrompt);
-    return false;
+
 }
 
 /*

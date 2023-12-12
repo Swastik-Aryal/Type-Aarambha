@@ -16,7 +16,11 @@ FocusScope {
     property bool live1_visible: true
     property bool live2_visible: true
     property bool live3_visible: true
+    property int liveslosttotal: 0
     property int liveslost: 0
+    property bool res_visibility: false
+    property int __highscore: 0
+    property bool wrongchar: false
 
     Image {
 
@@ -34,6 +38,58 @@ FocusScope {
         anchors {
             left: parent.left
             top: parent.top
+        }
+        //high scorecard
+        Rectangle {
+            id: _highscore
+
+            width: 190
+            height: 40
+            radius: 10
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: "#1E3F66"
+                }
+                GradientStop {
+                    position: 0.33
+                    color: "#2E5984"
+                }
+                GradientStop {
+                    position: 1.0
+                    color: "#528AAE"
+                }
+            }
+
+            anchors {
+                leftMargin: -10
+                topMargin: 12
+                left: parent.left
+                top: parent.top
+            }
+            Text {
+                id: _highscoreTxt
+                text: "High Score"
+                color: "white"
+                font.italic: true
+                font.pixelSize: 25
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+                Text {
+                    text: __highscore
+                    color: "white"
+                    font.italic: true
+                    font.pixelSize: 25
+
+                    anchors {
+                        left: parent.right
+                        leftMargin: 5
+                    }
+                }
+            }
         }
 
         //scorecard
@@ -62,7 +118,7 @@ FocusScope {
                 leftMargin: -10
                 topMargin: 12
                 left: parent.left
-                top: parent.top
+                top: _highscore.bottom
             }
             Text {
                 id: _scoreTxt
@@ -126,8 +182,18 @@ FocusScope {
                     leftMargin: 5
                     left: _live2.right
                 }
-                visible: live3_visible
+                visible: live1_visible
             }
+        }
+
+        //for blureffect after death
+        Rectangle {
+            color: "red"
+            opacity: 0.5
+            visible: wrongchar
+            z: 1
+            width: _win.width
+            height: _win.height
         }
     }
 
@@ -335,6 +401,79 @@ FocusScope {
             }
         ]
 
+        // restart button
+        Rectangle {
+            id: _restart
+
+            width: 250
+            height: 80
+            z: 2
+            radius: 10
+            visible: res_visibility
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: "#1E3F66"
+                }
+                GradientStop {
+                    position: 0.33
+                    color: "#2E5984"
+                }
+                GradientStop {
+                    position: 1.0
+                    color: "#528AAE"
+                }
+            }
+
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
+            Text {
+                id: _restxt
+                text: "Restart"
+                color: "white"
+                font.bold: true
+                font.pixelSize: 40
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+
+            MouseArea {
+                id: _resmousearea
+                anchors.fill: _restart
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+                onClicked: {
+
+                    live1_visible = true
+                    live2_visible = true
+                    live3_visible = true
+                    liveslost = 0
+                    liveslosttotal = 0
+                    __score = 0
+                    _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
+                    _textPrompt.anchors.bottom = _log2.top
+
+                    _player.mirror = false
+
+                    _mainRect.state = "1_down"
+                    _player.anchors.bottom = _log1.top
+                    _player.anchors.horizontalCenter = _log1.horizontalCenter
+
+                    __currentLog = 1
+                    _lesson = "LessonReady"
+                    res_visibility = false
+                    wrongchar = false
+                    gameObj.reset()
+                    _textInput.text = ""
+                }
+            }
+        }
+
         // player here
         AnimatedImage {
 
@@ -408,6 +547,20 @@ FocusScope {
                 _textInput.focus = true
                 gameObj.reset()
             }
+            Timer {
+                id: timeoutTimer
+                interval: 250
+                repeat: false
+
+                onTriggered: {
+                    wrongchar = false
+                }
+            }
+            function wrong() {
+                wrongchar = true
+                timeoutTimer.start()
+            }
+
             Keys.onPressed: event => {
 
                                 if (event.key === Qt.Key_Backspace) {
@@ -431,186 +584,95 @@ FocusScope {
 
                     if (keystrokeIsPrintable || spacePressed
                             || backspacePressed) {
-                        if (liveslost !== 3) {
 
-                            // track progress and update test prompt
-                            if (gameObj.processgameKbInput(_textInput.text,
-                                                           backspacePressed,
-                                                           spacePressed,
-                                                           "game")) {
+                        // track progress and update test prompt
+                        gameObj.processgameKbInput(_textInput.text,
+                                                   backspacePressed,
+                                                   spacePressed, "game")
 
-                                _textInput.text = ""
-                                if (__currentLog === 3) {
-
-                                    _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
-                                    _textPrompt.anchors.bottom = _log2.top
-
-                                    _player.mirror = false
-                                    __score = __score + 1
-
-                                    _player.anchors.bottom = _log1.top
-                                    _player.anchors.horizontalCenter = _log1.horizontalCenter
-                                    _scaler1.stop()
-                                    _scaler2.start()
-
-                                    __currentLog = 1
-                                    _mainRect.state = "1_down"
-                                } else if (__currentLog === 1) {
-
-                                    _textPrompt.anchors.horizontalCenter = _log3.horizontalCenter
-                                    _textPrompt.anchors.bottom = _log3.top
-
-                                    _player.mirror = true
-                                    __score = __score + 1
-
-                                    _scaler1.start()
-                                    _mainRect.state = "2_down"
-                                    _player.anchors.bottom = _log2.top
-                                    _player.anchors.horizontalCenter = _log2.horizontalCenter
-                                    _scaler1.stop()
-                                    _scaler2.start()
-
-                                    __currentLog = 2
-                                } else if (__currentLog === 2) {
-                                    _textPrompt.anchors.horizontalCenter = _log1.horizontalCenter
-                                    _textPrompt.anchors.bottom = _log1.top
-
-                                    _player.mirror = false
-                                    __score = __score + 1
-
-                                    _scaler1.start()
-
-                                    _player.anchors.bottom = _log3.top
-                                    _player.anchors.horizontalCenter = _log3.horizontalCenter
-                                    _scaler1.stop()
-                                    _scaler2.start()
-
-                                    __currentLog = 3
-                                    _mainRect.state = "3_down"
-                                }
+                        liveslost = gameObj.getTotalTypedChars(
+                                    ) - gameObj.getCorrectChars()
+                        if (liveslost != 0 && liveslosttotal !== liveslost) {
+                            liveslosttotal += 1
+                            if (liveslosttotal !== 3) {
+                                wrong()
                             }
-                        } else {
-                            __score = 0
-                            live1_visible = true
-                            live2_visible = true
-                            live3_visible = true
-                            _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
-                            _textPrompt.anchors.bottom = _log2.top
-
-                            _player.anchors.bottom = _log1.top
-                            _player.anchors.horizontalCenter = _log1.horizontalCenter
-                            __currentLog = 1
-                            _mainRect.state = "1_down"
-                            liveslost = 0
-
-                            restartTest()
                         }
 
-                        // clear input field if the user finished typing the current word
-                        //if (wordcomplete) {
-                        //  _textInput.text = ""
-                        //}
+                        if (liveslosttotal === 3) {
+                            live3_visible = false
+
+                            _lesson = "LessonEnded"
+                            res_visibility = true
+                            wrongchar = true
+                        } else {
+
+                            if (liveslosttotal == 1) {
+
+                                live1_visible = false
+                            } else if (liveslosttotal == 2) {
+
+                                live2_visible = false
+                            }
+                        }
+
+                        if (gameObj.lessonEnded) {
+                            if (__currentLog === 3) {
+
+                                _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
+                                _textPrompt.anchors.bottom = _log2.top
+
+                                _player.mirror = false
+                                __score = __score + 1
+
+                                _player.anchors.bottom = _log1.top
+                                _player.anchors.horizontalCenter = _log1.horizontalCenter
+                                _scaler1.stop()
+                                _scaler2.start()
+
+                                __currentLog = 1
+                                _mainRect.state = "1_down"
+                            } else if (__currentLog === 1) {
+
+                                _textPrompt.anchors.horizontalCenter = _log3.horizontalCenter
+                                _textPrompt.anchors.bottom = _log3.top
+
+                                _player.mirror = true
+                                __score = __score + 1
+
+                                _scaler1.start()
+                                _mainRect.state = "2_down"
+                                _player.anchors.bottom = _log2.top
+                                _player.anchors.horizontalCenter = _log2.horizontalCenter
+                                _scaler1.stop()
+                                _scaler2.start()
+
+                                __currentLog = 2
+                            } else if (__currentLog === 2) {
+                                _textPrompt.anchors.horizontalCenter = _log1.horizontalCenter
+                                _textPrompt.anchors.bottom = _log1.top
+
+                                _player.mirror = false
+                                __score = __score + 1
+
+                                _scaler1.start()
+
+                                _player.anchors.bottom = _log3.top
+                                _player.anchors.horizontalCenter = _log3.horizontalCenter
+                                _scaler1.stop()
+                                _scaler2.start()
+
+                                __currentLog = 3
+                                _mainRect.state = "3_down"
+                            }
+                            if (__score > __highscore) {
+                                __highscore = __score
+                            }
+                            _textInput.text = ""
+                        }
                     }
                 }
             }
-
-
-            /*
-
-        //input field above the logs
-        TextInput {
-
-
-
-
-
-
-
-            id: testInput
-            font.italic: true
-            font.pixelSize: 25
-            color: "black"
-            focus: true
-            anchors {
-
-                bottom: _log2.top
-                horizontalCenter: _log2.horizontalCenter
-                left: _log2.left
-                bottomMargin: -5
-                leftMargin: 50
-            }
-            onTextEdited: {
-                if (__currentLog === 3 && (testInput.text === __trialtext)) {
-                    testInput.clear()
-                    testInput.anchors.bottom = _log2.top
-                    testInput.anchors.horizontalCenter = _log2.horizontalCenter
-                    testInput.anchors.left = _log2.left
-
-                    _player.mirror = false
-                    __score = __score + 1
-                    console.log("pressed")
-                    _log1.__textVisibility = false
-                    _log2.__textVisibility = true
-                    _log3.__textVisibility = true
-                    _scaler1.start()
-
-                    _player.anchors.bottom = _log1.top
-                    _player.anchors.horizontalCenter = _log1.horizontalCenter
-                    _scaler1.stop()
-                    _scaler2.start()
-
-                    __currentLog = 1
-                    _mainRect.state = "1_down"
-                } else if (__currentLog === 1
-                           && (testInput.text === __trialtext)) {
-
-                    testInput.clear()
-                    testInput.anchors.bottom = _log3.top
-                    testInput.anchors.horizontalCenter = _log3.horizontalCenter
-                    testInput.anchors.left = _log3.left
-
-                    _player.mirror = true
-                    __score = __score + 1
-                    console.log("pressed")
-                    _log1.__textVisibility = true
-                    _log2.__textVisibility = false
-                    _log3.__textVisibility = true
-
-                    _scaler1.start()
-                    _mainRect.state = "2_down"
-                    _player.anchors.bottom = _log2.top
-                    _player.anchors.horizontalCenter = _log2.horizontalCenter
-                    _scaler1.stop()
-                    _scaler2.start()
-
-                    __currentLog = 2
-                } else if (__currentLog === 2
-                           && (testInput.text === __trialtext)) {
-
-                    testInput.clear()
-                    testInput.anchors.bottom = _log1.top
-                    testInput.anchors.horizontalCenter = _log1.horizontalCenter
-                    testInput.anchors.left = _log1.left
-
-                    _player.mirror = false
-                    __score = __score + 1
-                    console.log("pressed")
-                    _log1.__textVisibility = true
-                    _log2.__textVisibility = true
-                    _log3.__textVisibility = false
-                    _scaler1.start()
-
-                    _player.anchors.bottom = _log3.top
-                    _player.anchors.horizontalCenter = _log3.horizontalCenter
-                    _scaler1.stop()
-                    _scaler2.start()
-
-                    __currentLog = 3
-                    _mainRect.state = "3_down"
-                }
-            }
-        }
-        */
         }
     }
 }
