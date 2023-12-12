@@ -27,7 +27,6 @@ void Lesson::reset()
     m_lessonEnded = false;
     sampleWordDataset();
     updateTextPrompt(true);
-
 }
 
 void Lesson::sampleWordDataset()
@@ -108,7 +107,6 @@ void Lesson::processKbInput(const QString &input,
         /* Set color for each typed letter of current word,
          * depending on correctness. */
         setCurrentWordColor(currentLessonWord, input, currentMode);
-        keyboardHint(currentLessonWord);
     }
     updateTextPrompt(resetTextPrompt);
 }
@@ -145,7 +143,6 @@ void Lesson::processgameKbInput(const QString &input,
     setCurrentWordColor(currentLessonWord, input, currentMode);
 
     updateTextPrompt(resetTextPrompt);
-
 }
 
 /*
@@ -175,7 +172,22 @@ void Lesson::setCurrentWordColor(const QString &currentWord, const QString &user
     m_textPromptCurrentWord = QString("<u>%1</u>").arg(m_textPromptCurrentWord);
 }
 
-void Lesson::keyboardHint(const QString &currentWord) {}
+/*
+ * returns the character that the user is supposed to type next
+ */
+QString Lesson::getNextCharacter(const QString &input) const
+{
+    const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
+    if (input.length() < currentLessonWord.length()) {
+        return currentLessonWord.at(input.length());
+    } else if (input.length() == currentLessonWord.length()) {
+        return "space";
+    } else if (input.length() > currentLessonWord.length()) {
+        return currentLessonWord.at(0);
+    } else {
+        return "dont know";
+    }
+}
 
 /*
  * textPrompt contains a sample of words that the user should type.

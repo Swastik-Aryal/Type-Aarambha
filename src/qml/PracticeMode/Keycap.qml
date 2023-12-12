@@ -7,6 +7,21 @@ Rectangle {
     property color __keyShadowColor: "#1B2028"
     property color __keyTextColor: "#CCCCB5"
     property color __keyRectColor: "#151A21"
+    property bool __lightSwitch: false
+
+    function js_keyLightUp() {
+        if (__lightSwitch) {
+            __keyShadowColor = "#CCCCB5"
+            __keyShadowColor = "#CCCCB5"
+            __keyRectColor = "#AFAF89"
+            __keyTextColor = "#151A21"
+        } else {
+            __keyShadowColor = "#1B2028"
+            __keyShadowColor = "#1B2028"
+            __keyRectColor = "#151A21"
+            __keyTextColor = "#CCCCB5"
+        }
+    }
 
     //outer Rectangle
     id: _rootRectKey
@@ -40,22 +55,6 @@ Rectangle {
             color: __keyTextColor
             anchors.centerIn: parent
             //   anchors.verticalCenterOffset: -(parent.height / 8)
-        }
-    }
-    MouseArea {
-        anchors.fill: parent
-
-        onPressed: {
-            __keyShadowColor = "#CCCCB5"
-            __keyShadowColor = "#CCCCB5"
-            __keyRectColor = "#AFAF89"
-            __keyTextColor = "#151A21"
-        }
-        onReleased: {
-            __keyShadowColor = "#1B2028"
-            __keyShadowColor = "#1B2028"
-            __keyRectColor = "#151A21"
-            __keyTextColor = "#CCCCB5"
         }
     }
 }

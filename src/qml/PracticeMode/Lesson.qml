@@ -4,6 +4,7 @@ Item {
     id: _lesson
     state: "LessonReady"
     property int __lessonDuration: 0
+    property alias __inputText: _textInput.text
 
     implicitWidth: parent.width * 0.60
     implicitHeight: parent.height * 0.24
@@ -28,16 +29,16 @@ Item {
         _lesson.state = "LessonReady"
         _textInput.focus = true
         lessonObj.reset()
+        _keyboardLayout.js_updateKeyboardHint()
     }
 
     Timer {
         id: _lessonTimer
-        interval: 1
+        interval: 16
         repeat: true
         running: _lesson.state === "LessonActive"
         onTriggered: {
-            __lessonDuration += 1
-
+            __lessonDuration += 16
             if (lessonObj.lessonEnded) {
                 _lessonTimer.stop()
                 _statBar.__wpm = lessonObj.calculateWPM(
@@ -62,9 +63,9 @@ Item {
         text: lessonObj.textPrompt
         color: "#4B5975"
         font.family: __lessonFont
-        font.pixelSize: 24
+        font.pixelSize: __lessonFontSize
         font.weight: 550
-        font.letterSpacing: 1
+        font.letterSpacing: __lessonFontSpacing
         wrapMode: Text.WordWrap
     }
 
@@ -82,9 +83,9 @@ Item {
             id: _textInput
             anchors.centerIn: parent
             font.family: __lessonFont
-            font.pixelSize: 24
+            font.pixelSize: __lessonFontSize
             font.weight: 550
-            font.letterSpacing: 1
+            font.letterSpacing: __lessonFontSpacing
             color: "#CCCCB5"
             focus: true
             activeFocusOnTab: true
@@ -102,7 +103,8 @@ Item {
                 if (_lesson.state === "LessonReady" && keystrokeIsPrintable) {
                     // start the test automatically
                     // when the user starts typing
-                    _lesson.state = "LessonActive"
+                    if (!spacePressed)
+                        _lesson.state = "LessonActive"
                 }
 
                 if (_lesson.state === "LessonActive") {
@@ -112,14 +114,16 @@ Item {
                         lessonObj.processKbInput(_textInput.text,
                                                  backspacePressed,
                                                  spacePressed, "lesson")
-
-                        // clear input field if the user finished typing the current word
-                        if (spacePressed) {
-                            _textInput.text = ""
-                        }
+                        //console.log("input length: " + _textInput.length)
+                        _keyboardLayout.js_updateKeyboardHint()
                     }
+                }
+                // clear input field if the user finished typing the current word
+                if (spacePressed) {
+                    _textInput.text = ""
                 }
             }
         }
     }
+    Component.onCompleted: _keyboardLayout.js_updateKeyboardHint()
 }

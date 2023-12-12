@@ -29,6 +29,7 @@ public:
                                     bool spacePressed,
                                     const QString &currentMode);
     Q_INVOKABLE void processgameKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode);
+    Q_INVOKABLE QString getNextCharacter(const QString &input) const;
     Q_INVOKABLE float calculateWPM(unsigned lessonDuration) const;
     Q_INVOKABLE float calculateAccuracy() const;
     Q_INVOKABLE unsigned getCorrectChars() const;
@@ -39,7 +40,6 @@ public:
 private:
     bool newCharIsCorrect(const QString &currentWord, const QString &input) const;
     void setCurrentWordColor(const QString &currentWord, const QString &input, const QString &currentMode);
-    void keyboardHint(const QString &currentWord);
     void sampleWordDataset();
     void updateTextPrompt(bool initialize);
 
