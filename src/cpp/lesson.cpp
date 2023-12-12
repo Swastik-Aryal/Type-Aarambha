@@ -211,6 +211,7 @@ void Lesson::setCurrentLanguage(const QString &language)
         m_currentLanguage = language;
         reset();
         emit currentLanguageChanged();
+
     }
 }
 

@@ -400,6 +400,94 @@ FocusScope {
                 }
             }
         ]
+        //language change button
+        Rectangle {
+            id: _languagechange
+
+            width: 190
+            height: 40
+            radius: 10
+
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: "#1E3F66"
+                }
+                GradientStop {
+                    position: 0.33
+                    color: "#2E5984"
+                }
+                GradientStop {
+                    position: 1.0
+                    color: "#528AAE"
+                }
+            }
+
+            anchors {
+                top: parent.top
+                right: parent.right
+                rightMargin: -270
+                topMargin: 10
+            }
+            Text {
+                id: _langtxt
+                text: __currentLanguage
+                color: "white"
+                font.bold: true
+                font.pixelSize: 20
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+
+            MouseArea {
+                id: _languagemousearea
+                anchors.fill: _languagechange
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+                onClicked: {
+                    gameObj.setCurrentLanguage(__currentLanguage)
+                    lessonObj.setCurrentLanguage(__currentLanguage)
+                    if (__currentLanguage === "english") {
+                        languageSwitcher.switchToNepali()
+                        __currentLanguage = "nepali"
+                        __lessonFont = _NotoSansDevanagari.name
+                        __lessonFontSize = 30
+                        __lessonFontSpacing = 3
+                    } else {
+                        languageSwitcher.switchToEnglish()
+                        __currentLanguage = "english"
+                        __lessonFont = _NotoSansMono.name
+                        __lessonFontSize = 24
+                        __lessonFontSpacing = 1
+                    }
+
+                    live1_visible = true
+                    live2_visible = true
+                    live3_visible = true
+                    liveslost = 0
+                    liveslosttotal = 0
+                    __score = 0
+                    _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
+                    _textPrompt.anchors.bottom = _log2.top
+
+                    _player.mirror = false
+
+                    _mainRect.state = "1_down"
+                    _player.anchors.bottom = _log1.top
+                    _player.anchors.horizontalCenter = _log1.horizontalCenter
+
+                    __currentLog = 1
+                    _lesson = "LessonReady"
+                    res_visibility = false
+                    wrongchar = false
+                    gameObj.reset()
+                    _textInput.text = ""
+                }
+            }
+        }
 
         // restart button
         Rectangle {
@@ -594,7 +682,7 @@ FocusScope {
                                     ) - gameObj.getCorrectChars()
                         if (liveslost != 0 && liveslosttotal !== liveslost) {
                             liveslosttotal += 1
-                            if (liveslosttotal !== 3) {
+                            if (liveslosttotal === 1 || liveslosttotal === 2) {
                                 wrong()
                             }
                         }

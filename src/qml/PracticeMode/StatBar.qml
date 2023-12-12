@@ -122,6 +122,8 @@ Rectangle {
                     hoverEnabled: true
                     onClicked: {
                         lessonObj.setCurrentLanguage(__currentLanguage)
+                        gameObj.setCurrentLanguage(__currentLanguage)
+
                         if (__currentLanguage === "english") {
                             languageSwitcher.switchToNepali()
                             __currentLanguage = "nepali"
