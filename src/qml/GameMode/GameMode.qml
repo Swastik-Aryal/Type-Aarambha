@@ -22,6 +22,30 @@ FocusScope {
     property int __highscore: 0
     property bool wrongchar: false
 
+    function resetgame() {
+        live1_visible = true
+        live2_visible = true
+        live3_visible = true
+        liveslost = 0
+        liveslosttotal = 0
+        __score = 0
+        _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
+        _textPrompt.anchors.bottom = _log2.top
+
+        _player.mirror = false
+
+        _mainRect.state = "1_down"
+        _player.anchors.bottom = _log1.top
+        _player.anchors.horizontalCenter = _log1.horizontalCenter
+
+        __currentLog = 1
+        _lesson = "LessonReady"
+        res_visibility = false
+        wrongchar = false
+        gameObj.reset()
+        _textInput.text = ""
+    }
+
     Image {
 
         id: bg
@@ -312,14 +336,14 @@ FocusScope {
                     property: "y"
                     from: 150 - _log1.height / 1.5
                     to: 300
-                    duration: 2000
+                    duration: 1200
                 }
                 PropertyAnimation {
                     targets: _log2
                     property: "y"
                     from: 300
                     to: 450 + _log1.height / 1.5
-                    duration: 2000
+                    duration: 1200
                 }
 
                 SequentialAnimation {
@@ -329,14 +353,14 @@ FocusScope {
                         property: "y"
                         from: 450 + _log1.height / 1.5
                         to: _mainRect.height
-                        duration: 1000
+                        duration: 600
                     }
                     NumberAnimation {
                         targets: _log1
                         property: "y"
                         from: 0
                         to: 150 - _log1.height / 1.5
-                        duration: 1000
+                        duration: 600
                     }
                 }
             },
@@ -348,14 +372,14 @@ FocusScope {
                     property: "y"
                     from: 150 - _log1.height / 1.5
                     to: 300
-                    duration: 2000
+                    duration: 1200
                 }
                 PropertyAnimation {
                     targets: _log3
                     property: "y"
                     from: 300
                     to: 450 + _log1.height / 1.5
-                    duration: 2000
+                    duration: 1200
                 }
                 SequentialAnimation {
 
@@ -364,14 +388,14 @@ FocusScope {
                         property: "y"
                         from: 450 + _log1.height / 1.5
                         to: _mainRect.height
-                        duration: 1000
+                        duration: 600
                     }
                     NumberAnimation {
                         targets: _log2
                         property: "y"
                         from: 0
                         to: 150 - _log1.height / 1.5
-                        duration: 1000
+                        duration: 600
                     }
                 }
             },
@@ -383,14 +407,14 @@ FocusScope {
                     property: "y"
                     from: 150 - _log1.height / 1.5
                     to: 300
-                    duration: 2000
+                    duration: 1200
                 }
                 PropertyAnimation {
                     targets: _log1
                     property: "y"
                     from: 300
                     to: 450 + _log1.height / 1.5
-                    duration: 2000
+                    duration: 1200
                 }
                 SequentialAnimation {
 
@@ -399,14 +423,14 @@ FocusScope {
                         property: "y"
                         from: 450 + _log1.height / 1.5
                         to: _mainRect.height
-                        duration: 1000
+                        duration: 600
                     }
                     NumberAnimation {
                         targets: _log3
                         property: "y"
                         from: 0
                         to: 150 - _log1.height / 1.5
-                        duration: 1000
+                        duration: 600
                     }
                 }
             }
@@ -475,27 +499,7 @@ FocusScope {
                         __lessonFontSpacing = 1
                     }
 
-                    live1_visible = true
-                    live2_visible = true
-                    live3_visible = true
-                    liveslost = 0
-                    liveslosttotal = 0
-                    __score = 0
-                    _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
-                    _textPrompt.anchors.bottom = _log2.top
-
-                    _player.mirror = false
-
-                    _mainRect.state = "1_down"
-                    _player.anchors.bottom = _log1.top
-                    _player.anchors.horizontalCenter = _log1.horizontalCenter
-
-                    __currentLog = 1
-                    _lesson = "LessonReady"
-                    res_visibility = false
-                    wrongchar = false
-                    gameObj.reset()
-                    _textInput.text = ""
+                    resetgame()
                 }
             }
         }
@@ -548,27 +552,7 @@ FocusScope {
                 hoverEnabled: true
                 onClicked: {
 
-                    live1_visible = true
-                    live2_visible = true
-                    live3_visible = true
-                    liveslost = 0
-                    liveslosttotal = 0
-                    __score = 0
-                    _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
-                    _textPrompt.anchors.bottom = _log2.top
-
-                    _player.mirror = false
-
-                    _mainRect.state = "1_down"
-                    _player.anchors.bottom = _log1.top
-                    _player.anchors.horizontalCenter = _log1.horizontalCenter
-
-                    __currentLog = 1
-                    _lesson = "LessonReady"
-                    res_visibility = false
-                    wrongchar = false
-                    gameObj.reset()
-                    _textInput.text = ""
+                    resetgame()
                 }
             }
         }
@@ -594,7 +578,7 @@ FocusScope {
                 target: _player
                 from: 0.46
                 to: 0
-                duration: 500
+                duration: 600
                 running: false
             }
             ScaleAnimator {
@@ -602,7 +586,7 @@ FocusScope {
                 target: _player
                 from: 0
                 to: 0.46
-                duration: 500
+                duration: 600
                 running: false
             }
         }
@@ -631,8 +615,8 @@ FocusScope {
             color: "transparent"
             cursorVisible: false
             focus: true
-            activeFocusOnTab: true
 
+            //activeFocusOnTab: true
             visible: false
 
             property bool keystrokeIsPrintable: false

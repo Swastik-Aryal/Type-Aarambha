@@ -124,7 +124,8 @@ Item {
     }
     property int __currentView: 1 //int to indicate the current view; practiceView: 1; gameView: 2; profileView: 3;
     on__CurrentViewChanged: {
-        _practiceMode.js_finishLesson();
+        _practiceMode.js_finishLesson()
+        _gameMode.resetgame()
     }
 
     states: [
