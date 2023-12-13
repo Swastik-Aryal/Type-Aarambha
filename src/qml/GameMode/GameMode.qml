@@ -186,12 +186,22 @@ FocusScope {
             }
         }
 
-        //for blureffect after death
+        //for blureffect for error
         Rectangle {
             id: _wrong
             color: "red"
             opacity: 0.5
             visible: wrongchar
+            z: 1
+            width: _win.width
+            height: _win.height
+        }
+        //for blureffect after death
+        Rectangle {
+
+            color: "red"
+            opacity: 0.5
+            visible: res_visibility
             z: 1
             width: _win.width
             height: _win.height
@@ -692,7 +702,7 @@ FocusScope {
                         }
 
                         if (liveslosttotal === 3) {
-                            wrongchar = true
+
                             live3_visible = false
                             res_visibility = true
 
