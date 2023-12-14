@@ -2,10 +2,10 @@
 #define LESSON_H
 
 #include <QObject>
+#include <iostream>
 #include <random>
 #include <string>
 #include <vector>
-#include <iostream>
 
 class Lesson : public QObject
 {
@@ -28,7 +28,10 @@ public:
                                     bool backspacePressed,
                                     bool spacePressed,
                                     const QString &currentMode);
-    Q_INVOKABLE void processgameKbInput(const QString &input, bool backspacePressed, bool spacePressed, const QString &currentMode);
+    Q_INVOKABLE void processgameKbInput(const QString &input,
+                                        bool backspacePressed,
+                                        bool spacePressed,
+                                        const QString &currentMode);
     Q_INVOKABLE QString getNextCharacter(const QString &userInput, bool spacePressed) const;
     Q_INVOKABLE float calculateWPM(unsigned lessonDuration) const;
     Q_INVOKABLE float calculateAccuracy() const;
@@ -39,7 +42,9 @@ public:
 
 private:
     bool newCharIsCorrect(const QString &currentWord, const QString &input) const;
-    void setCurrentWordColor(const QString &currentWord, const QString &input, const QString &currentMode);
+    void setCurrentWordColor(const QString &currentWord,
+                             const QString &input,
+                             const QString &currentMode);
     void sampleWordDataset();
     void updateTextPrompt(bool initialize);
 
