@@ -9,7 +9,6 @@ FocusScope {
     anchors.topMargin: -60
 
     property int __score: 0
-    property string __trialtext: "HiCutie"
     property int __currentLog: 1
     property string _lesson: "LessonReady"
     property int __lessonDuration
@@ -95,18 +94,22 @@ FocusScope {
                 id: _highscoreTxt
                 text: "High Score"
                 color: "white"
-                font.italic: true
-                font.pixelSize: 25
+                font.family: __lessonFont
+
+                font.pixelSize: 22
 
                 anchors {
-                    horizontalCenter: parent.horizontalCenter
+
+                    left: parent.left
+                    leftMargin: 25
                     verticalCenter: parent.verticalCenter
                 }
                 Text {
                     text: __highscore
                     color: "white"
-                    font.italic: true
-                    font.pixelSize: 25
+                    font.family: __lessonFont
+
+                    font.pixelSize: 22
 
                     anchors {
                         left: parent.right
@@ -148,18 +151,22 @@ FocusScope {
                 id: _scoreTxt
                 text: "Score"
                 color: "white"
-                font.italic: true
-                font.pixelSize: 25
+                font.family: __lessonFont
+
+                font.pixelSize: 22
 
                 anchors {
-                    horizontalCenter: parent.horizontalCenter
+
+                    left: parent.left
+                    leftMargin: 25
                     verticalCenter: parent.verticalCenter
                 }
                 Text {
                     text: __score
                     color: "white"
-                    font.italic: true
-                    font.pixelSize: 25
+                    font.family: __lessonFont
+
+                    font.pixelSize: 22
 
                     anchors {
                         left: parent.right
@@ -461,13 +468,14 @@ FocusScope {
             anchors {
                 top: parent.top
                 right: parent.right
-                rightMargin: -270
+                rightMargin: -295
                 topMargin: 10
             }
             Text {
                 id: _langtxt
                 text: __currentLanguage
                 color: "white"
+                font.family: __lessonFont
                 font.bold: true
                 font.pixelSize: 20
 
@@ -536,6 +544,7 @@ FocusScope {
                 id: _restxt
                 text: "Restart"
                 color: "white"
+                font.family: __lessonFont
                 font.bold: true
                 font.pixelSize: 40
 
