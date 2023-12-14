@@ -97,7 +97,35 @@ Item {
                                 keystrokeIsPrintable = event.text.length > 0
                                 backspacePressed = event.key === Qt.Key_Backspace
                                 spacePressed = event.key === Qt.Key_Space
+                                if (event.key === Qt.Key_Shift) {
+                                    _keyboardLayout.__shiftState = "shift"
+                                }
+                                if (event.modifiers & Qt.ControlModifier
+                                    && event.modifiers & Qt.AltModifier) {
+                                    _keyboardLayout.__shiftState = "CtrlAltR"
+                                }
+
+                                if (event.modifiers & Qt.ControlModifier
+                                    && event.modifiers & Qt.AltModifier
+                                    && event.modifiers & Qt.ShiftModifier) {
+                                    _keyboardLayout.__shiftState = "shiftCtrlAlt"
+                                }
                             }
+            Keys.onReleased: event => {
+                                 if (event.key === Qt.Key_Shift) {
+                                     _keyboardLayout.__shiftState = "base"
+                                 }
+                                 if (event.modifiers & Qt.ControlModifier
+                                     || event.modifiers & Qt.AltModifier) {
+                                     _keyboardLayout.__shiftState = "base"
+                                 }
+
+                                 if (event.modifiers & Qt.ControlModifier
+                                     || event.modifiers & Qt.AltModifier
+                                     || event.modifiers & Qt.ShiftModifier) {
+                                     _keyboardLayout.__shiftState = "base"
+                                 }
+                             }
             // called after Keys.onPressed callback
             onTextEdited: {
                 if (_lesson.state === "LessonReady" && keystrokeIsPrintable) {

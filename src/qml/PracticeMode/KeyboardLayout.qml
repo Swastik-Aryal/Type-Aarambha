@@ -255,25 +255,9 @@ Item {
             spacing: 4
             Keycap {
                 id: _leftShiftKey
+                __iso: "B99"
                 width: __keyWidth * 2.725
                 __keyText: "SHIFT"
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: {
-                        __shiftState = "shift"
-                        parent.__keyShadowColor = "#CCCCB5"
-                        parent.__keyShadowColor = "#CCCCB5"
-                        parent.__keyRectColor = "#AFAF89"
-                        parent.__keyTextColor = "#151A21"
-                    }
-                    onReleased: {
-                        __shiftState = "base"
-                        parent.__keyShadowColor = "#1B2028"
-                        parent.__keyShadowColor = "#1B2028"
-                        parent.__keyRectColor = "#151A21"
-                        parent.__keyTextColor = "#CCCCB5"
-                    }
-                }
             }
             Keycap {
                 id: _zKey
@@ -328,23 +312,6 @@ Item {
                 id: _rightShiftKey
                 width: __keyWidth * 2.725
                 __keyText: "SHIFT"
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: {
-                        __shiftState = "shift"
-                        parent.__keyShadowColor = "#CCCCB5"
-                        parent.__keyShadowColor = "#CCCCB5"
-                        parent.__keyRectColor = "#AFAF89"
-                        parent.__keyTextColor = "#151A21"
-                    }
-                    onReleased: {
-                        __shiftState = "base"
-                        parent.__keyShadowColor = "#1B2028"
-                        parent.__keyShadowColor = "#1B2028"
-                        parent.__keyRectColor = "#151A21"
-                        parent.__keyTextColor = "#CCCCB5"
-                    }
-                }
             }
         }
 
@@ -355,11 +322,13 @@ Item {
             Layout.fillHeight: true
             Keycap {
                 id: _leftCtrlKey
+                __iso: "A99"
                 width: __keyWidth * 3.125
                 __keyText: "CTRL"
             }
             Keycap {
                 id: _leftAltKey
+                __iso: "A01"
                 width: __keyWidth * 1.625
                 __keyText: "ALT"
             }
@@ -391,7 +360,7 @@ Item {
         }
     }
 
-    property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey, _spacebarKey]
+    property var keyList: [_backtickKey, _oneKey, _twoKey, _threeKey, _fourKey, _fiveKey, _sixKey, _sevenKey, _eightKey, _nineKey, _zeroKey, _minusKey, _equalsKey, _qKey, _wKey, _eKey, _rKey, _tKey, _yKey, _uKey, _iKey, _oKey, _pKey, _openSquareBracketKey, _closeSquareBracketKey, _backslashKey, _aKey, _sKey, _dKey, _fKey, _gKey, _hKey, _jKey, _kKey, _lKey, _semicolonKey, _apostropheKey, _zKey, _xKey, _cKey, _vKey, _bKey, _nKey, _mKey, _commaKey, _dotKey, _slashKey, _spacebarKey, _leftShiftKey, _leftCtrlKey, _leftAltKey]
 
     property var translationDict: {
         "english": {
@@ -707,7 +676,7 @@ Item {
 
     //updates the text on the keycops
     function js_updateKeyTexts() {
-        for (var i = 0; i < keyList.length - 1; ++i) {
+        for (var i = 0; i < keyList.length - 4; ++i) {
             var key = keyList[i]
             key.__keyText = js_getKeyText(key.__iso)
         }
@@ -716,16 +685,63 @@ Item {
     function js_updateKeyboardHint() {
         var nextCharacter = lessonObj.getNextCharacter(
                     _lessonInterface.__inputText, _lessonInterface.spacePressed)
-        var keyIso
+        var keyIso = js_getKeyInfo(nextCharacter)[0]
+        var state = js_getKeyInfo(nextCharacter)[1]
 
-        keyIso = js_getKeyIso(nextCharacter)
+        //clear previous hints
+        clearKeyboardHint()
 
+        if (state === "base") {
+            keySwitchOn(keyIso)
+        } else if (state === "shift") {
+            //light up shift
+            keySwitchOn("B99")
+
+            if (__shiftState === "shift") {
+                keySwitchOn(keyIso)
+            }
+        } else if (state === "CtrlAltR") {
+
+            //light up ctrl + alt
+            keySwitchOn("A99")
+            keySwitchOn("A01")
+
+            _leftAltKey.__lightSwitch = true
+            _leftAltKey.js_keyLightUp()
+
+            if (__shiftState === "CtrlAltR") {
+                keySwitchOn(keyIso)
+            }
+        } else if (state === "shiftCtrlAlt") {
+
+            //light up shift + alt + ctrl
+            keySwitchOn("B99")
+            keySwitchOn("A01")
+            keySwitchOn("A99")
+
+            _leftAltKey.__lightSwitch = true
+            _leftAltKey.js_keyLightUp()
+
+            if (__shiftState === "shiftCtrlAlt") {
+                keySwitchOn(keyIso)
+            }
+        }
+    }
+
+    function clearKeyboardHint() {
         for (var i = 0; i < keyList.length; ++i) {
             var key = keyList[i]
+            //switch off previous
             if (key.__lightSwitch === true) {
                 key.__lightSwitch = false
                 key.js_keyLightUp()
             }
+        }
+    }
+
+    function keySwitchOn(keyIso) {
+        for (var i = 0; i < keyList.length; ++i) {
+            var key = keyList[i]
             if (key.__iso === keyIso) {
                 key.__lightSwitch = true
                 key.js_keyLightUp()
@@ -733,7 +749,7 @@ Item {
         }
     }
 
-    //lookup dict for the characters of the keyboards
+    //gets corresponding character from the iso for the on screen keyboard
     function js_getKeyText(keyIso) {
         if (__currentLanguage === "english" && __shiftState !== "base"
                 && __shiftState !== "shift") {
@@ -743,16 +759,17 @@ Item {
         }
     }
 
-    function js_getKeyIso(character) {
+    //gets corresponding iso and shiftstate
+    function js_getKeyInfo(character) {
         for (var language in translationDict) {
-            for (var category in translationDict[language]) {
-                var keyIsoMap = translationDict[language][category]
+            for (var state in translationDict[language]) {
+                var keyIsoMap = translationDict[language][state]
                 var keyIso = Object.keys(keyIsoMap).find(function (key) {
                     return keyIsoMap[key] === character
                 })
 
                 if (keyIso) {
-                    return keyIso
+                    return [keyIso, state]
                 }
             }
         }
@@ -760,6 +777,7 @@ Item {
 
     on__ShiftStateChanged: {
         js_updateKeyTexts()
+        js_updateKeyboardHint()
     }
 
     Component.onCompleted: {
