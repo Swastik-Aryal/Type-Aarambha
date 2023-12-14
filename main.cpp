@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "src/cpp/dataset.h"
-#include "src/cpp/languageswitcher.h"
+#include "src/cpp/layoutswitcher.h"
 #include "src/cpp/lesson.h"
 
 int main(int argc, char *argv[])
@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    LanguageSwitcher languageSwitcher;
-    engine.rootContext()->setContextProperty("languageSwitcher", &languageSwitcher);
+    LayoutSwitcher layoutSwitcher;
+    engine.rootContext()->setContextProperty("layoutSwitcher", &layoutSwitcher);
 
     Lesson *lessonObj = new Lesson(worddDataset, 25, &app);
     engine.rootContext()->setContextProperty("lessonObj", lessonObj);

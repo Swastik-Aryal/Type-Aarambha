@@ -486,13 +486,13 @@ FocusScope {
                     gameObj.setCurrentLanguage(__currentLanguage)
                     lessonObj.setCurrentLanguage(__currentLanguage)
                     if (__currentLanguage === "english") {
-                        languageSwitcher.switchToNepali()
+                        layoutSwitcher.activateLayout("nepali")
                         __currentLanguage = "nepali"
                         __lessonFont = _NotoSansDevanagari.name
                         __lessonFontSize = 30
                         __lessonFontSpacing = 3
                     } else {
-                        languageSwitcher.switchToEnglish()
+                        layoutSwitcher.activateLayout("english")
                         __currentLanguage = "english"
                         __lessonFont = _NotoSansMono.name
                         __lessonFontSize = 24

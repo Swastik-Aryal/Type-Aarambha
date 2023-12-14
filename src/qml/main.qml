@@ -52,7 +52,6 @@ ApplicationWindow {
     on__CurrentLanguageChanged: {
         _practiceMode.js_updateKeyTexts()
         _practiceMode.js_finishLesson()
-
     }
 
     // Practice Mode

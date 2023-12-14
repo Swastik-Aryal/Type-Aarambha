@@ -1,8 +1,7 @@
 QT += quick
-
 SOURCES += \
         main.cpp \
-        src/cpp/languageswitcher.cpp \
+        src/cpp/layoutswitcher.cpp \
         src/cpp/lesson.cpp
 
 resources.prefix = /$${TARGET}
@@ -24,7 +23,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 INCLUDEPATH += src/cpp
 
 HEADERS += \
-    src/cpp/languageswitcher.h \
+    src/cpp/layoutswitcher.h \
     src/cpp/dataset.h \
     src/cpp/lesson.h
 
