@@ -51,6 +51,7 @@ ApplicationWindow {
     property string __currentLanguage: "english"
     on__CurrentLanguageChanged: {
         _practiceMode.js_updateKeyTexts()
+        _practiceMode.__lessonState = "LessonOff"
         _practiceMode.js_finishLesson()
     }
 

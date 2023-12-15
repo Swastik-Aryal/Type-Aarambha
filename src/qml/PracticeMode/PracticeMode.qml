@@ -2,6 +2,7 @@ import QtQuick
 
 FocusScope {
     anchors.fill: parent
+    property alias __lessonState: _lessonInterface.state
     StatBar {
         id: _statBar
     }

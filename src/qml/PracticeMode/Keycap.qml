@@ -9,26 +9,24 @@ Rectangle {
     property color __keyRectColor: "#151A21"
     property bool __lightSwitch: false
 
-    function js_keyLightUp() {
-        if (__lightSwitch) {
-            __keyShadowColor = "#CCCCB5"
-            __keyShadowColor = "#CCCCB5"
-            __keyRectColor = "#AFAF89"
-            __keyTextColor = "#151A21"
-        } else {
-            __keyShadowColor = "#1B2028"
-            __keyShadowColor = "#1B2028"
-            __keyRectColor = "#151A21"
-            __keyTextColor = "#CCCCB5"
-        }
-    }
-
     //outer Rectangle
     id: _rootRectKey
     width: 40
     height: 40
     color: __keyRectColor
     radius: height * 0.15
+
+    function js_keyLightUp() {
+        if (__lightSwitch) {
+            __keyTextColor = "#151A21"
+            __keyShadowColor = "#CCCCB5"
+            __keyRectColor = "#AFAF89"
+        } else {
+            __keyTextColor = "#CCCCB5"
+            __keyShadowColor = "#1B2028"
+            __keyRectColor = "#151A21"
+        }
+    }
 
     Rectangle {
         //inner rectangle for non-curved top corners

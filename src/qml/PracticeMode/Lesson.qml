@@ -1,11 +1,12 @@
 import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: _lesson
-    state: "LessonReady"
     property int __lessonDuration: 0
     property alias __inputText: _textInput.text
-
+    state: "lessonOff"
     property bool keystrokeIsPrintable: false
     property bool backspacePressed: false
     property bool spacePressed: false
@@ -20,22 +21,72 @@ Item {
 
     states: [
         State {
+            name: "LessonOff"
+            PropertyChanges {
+                target: _ctsRect
+                opacity: 0.9
+            }
+            PropertyChanges {
+                target: _textInput
+                focus: false
+            }
+            PropertyChanges {
+                target: _ctsMouseArea
+                enabled: true
+            }
+        },
+        State {
             name: "LessonReady"
+            PropertyChanges {
+                target: _ctsRect
+                opacity: 0
+            }
+            PropertyChanges {
+                target: _textInput
+                focus: true
+            }
+            PropertyChanges {
+                target: _ctsMouseArea
+                enabled: false
+            }
         },
         State {
             name: "LessonActive"
+            PropertyChanges {
+                target: _ctsRect
+                opacity: 0
+            }
+            PropertyChanges {
+                target: _textInput
+                focus: true
+            }
+            PropertyChanges {
+                target: _ctsMouseArea
+                enabled: false
+            }
         }
     ]
+    transitions: Transition {
+        NumberAnimation {
+            target: _ctsRect
+            property: "opacity"
+            duration: 100
+        }
+    }
 
     function js_finishLesson() {
         _textInput.clear()
         __lessonDuration = 0
-        _lesson.state = "LessonReady"
-        _textInput.focus = true
         lessonObj.reset()
-        _keyboardLayout.js_updateKeyboardHint()
+        if (_lesson.state === "LessonOff") {
+            _keyboardLayout.clearKeyboardHint()
+        } else {
+            _lesson.state = "LessonReady"
+            _keyboardLayout.js_updateKeyboardHint()
+        }
     }
 
+    //timer for logging lesson time
     Timer {
         id: _lessonTimer
         interval: 16
@@ -57,6 +108,7 @@ Item {
         }
     }
 
+    //lesson prompt
     Text {
         id: _textPrompt
 
@@ -73,6 +125,7 @@ Item {
         wrapMode: Text.WordWrap
     }
 
+    //user input box
     Rectangle {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -91,8 +144,8 @@ Item {
             font.weight: 550
             font.letterSpacing: __lessonFontSpacing
             color: "#CCCCB5"
-            focus: true
-            activeFocusOnTab: true
+            //focus: true
+            //activeFocusOnTab: true
             Keys.onPressed: event => {
                                 keystrokeIsPrintable = event.text.length > 0
                                 backspacePressed = event.key === Qt.Key_Backspace
@@ -153,5 +206,38 @@ Item {
             }
         }
     }
-    Component.onCompleted: _keyboardLayout.js_updateKeyboardHint()
+
+    Rectangle {
+        id: _ctsRect
+        width: parent.width + 10
+        height: parent.height + 10
+        opacity: 0.9
+        color: "#1B2028"
+        Text {
+            id: _ctsText
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: -parent.height / 4.5
+            text: "Click to start lesson"
+            color: "#CCCCB5"
+            font.family: _NotoSansMono.name
+            font.pixelSize: 20
+        }
+        Image {
+            source: "qrc:/assets/assets/img/mouseCursor.svg"
+            fillMode: Image.PreserveAspectFit
+            height: 19.5
+            anchors.right: _ctsText.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -parent.height / 4.5
+            anchors.rightMargin: 8
+        }
+        MouseArea {
+            id: _ctsMouseArea
+            anchors.fill: parent
+            onClicked: {
+                _lesson.state = "LessonReady"
+                _keyboardLayout.js_updateKeyboardHint()
+            }
+        }
+    }
 }
