@@ -24,6 +24,7 @@ public:
     bool lessonEnded() const;
 
     Q_INVOKABLE void reset();
+    Q_INVOKABLE void restart();
     Q_INVOKABLE void processKbInput(const QString &input,
                                     bool backspacePressed,
                                     bool spacePressed,

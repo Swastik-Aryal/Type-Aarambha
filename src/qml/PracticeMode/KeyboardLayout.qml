@@ -15,7 +15,7 @@ Item {
     anchors {
         horizontalCenter: parent.horizontalCenter
         verticalCenter: parent.verticalCenter
-        verticalCenterOffset: parent.height / 3.5
+        verticalCenterOffset: parent.height / 3.75
     }
 
     // Column layout for arranging rows of keys

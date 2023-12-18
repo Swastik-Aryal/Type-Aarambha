@@ -30,6 +30,18 @@ void Lesson::reset()
     updateTextPrompt(true);
 }
 
+void Lesson::restart()
+{
+    m_correctChars = 0;
+    m_totalTypedChars = 0;
+    m_totalAcceptedChars = 0;
+    m_nextCharacterIndex = 0;
+    m_lessonEnded = false;
+    m_currentWordIdx = 0;
+    qDebug() << m_currentWordIdx;
+    updateTextPrompt(true);
+}
+
 void Lesson::sampleWordDataset()
 {
     m_currentWordIdx = 0;

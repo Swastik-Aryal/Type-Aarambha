@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 
 Item {
     id: _lesson
@@ -144,12 +144,19 @@ Item {
             font.weight: 550
             font.letterSpacing: __lessonFontSpacing
             color: "#CCCCB5"
-            //focus: true
-            //activeFocusOnTab: true
+
             Keys.onPressed: event => {
                                 keystrokeIsPrintable = event.text.length > 0
                                 backspacePressed = event.key === Qt.Key_Backspace
                                 spacePressed = event.key === Qt.Key_Space
+
+                                if (event.key === Qt.Key_Escape) {
+                                    _textInput.clear()
+                                    __lessonDuration = 0
+                                    lessonObj.restart()
+                                    _keyboardLayout.js_updateKeyboardHint()
+                                }
+
                                 if (event.key === Qt.Key_Shift) {
                                     _keyboardLayout.__shiftState = "shift"
                                 }
@@ -179,6 +186,7 @@ Item {
                                      _keyboardLayout.__shiftState = "base"
                                  }
                              }
+
             // called after Keys.onPressed callback
             onTextEdited: {
                 if (_lesson.state === "LessonReady" && keystrokeIsPrintable) {
@@ -195,7 +203,6 @@ Item {
                         lessonObj.processKbInput(_textInput.text,
                                                  backspacePressed,
                                                  spacePressed, "lesson")
-                        //console.log("input length: " + _textInput.length)
                         _keyboardLayout.js_updateKeyboardHint()
                     }
                 }
@@ -207,6 +214,7 @@ Item {
         }
     }
 
+    //for click to start
     Rectangle {
         id: _ctsRect
         width: parent.width + 10
@@ -237,6 +245,49 @@ Item {
             onClicked: {
                 _lesson.state = "LessonReady"
                 _keyboardLayout.js_updateKeyboardHint()
+            }
+        }
+    }
+
+    //for restart lesson info
+    Item {
+        implicitWidth: parent.width * 0.17
+        implicitHeight: parent.height * 0.08
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: parent.height / 0.5
+        }
+
+        RowLayout {
+            anchors.fill: parent
+            anchors.centerIn: parent
+            spacing: 0
+            Rectangle {
+                color: "#4B5975"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 0.28
+                radius: 2
+                Text {
+                    text: "esc"
+                    font.family: _NotoSansMono.name
+                    font.pixelSize: parent.height * 0.70
+                    color: "#1B2028"
+                    anchors.centerIn: parent
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredWidth: 1
+                Text {
+                    text: " - restart lesson"
+                    font.family: _NotoSansMono.name
+                    font.pixelSize: parent.height * 0.80
+                    color: "#4B5975"
+                    anchors.centerIn: parent
+                }
             }
         }
     }
