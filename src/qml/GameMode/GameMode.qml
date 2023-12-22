@@ -11,7 +11,6 @@ FocusScope {
     property int __score: 0
     property int __currentLog: 1
     property string _lesson: "LessonReady"
-    property int __lessonDuration
     property bool live1_visible: true
     property bool live2_visible: true
     property bool live3_visible: true
@@ -20,6 +19,10 @@ FocusScope {
     property bool res_visibility: false
     property int __highscore: 0
     property bool wrongchar: false
+    property bool newgame: false
+    property string __gamefont: _NotoSansMono.name
+    property string __engbtncolor: "#69BC0C"
+    property string __nepbtncolor: "#AC724F"
 
     function resetgame() {
         live1_visible = true
@@ -27,7 +30,7 @@ FocusScope {
         live3_visible = true
         liveslost = 0
         liveslosttotal = 0
-        __score = 0
+
         _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
         _textPrompt.anchors.bottom = _log2.top
 
@@ -39,10 +42,27 @@ FocusScope {
 
         __currentLog = 1
         _lesson = "LessonReady"
-        res_visibility = false
+
         wrongchar = false
         gameObj.reset()
         _textInput.text = ""
+        langcolorchange()
+    }
+    function restartgame() {
+        res_visibility = false
+        __score = 0
+        resetgame()
+        langcolorchange()
+        newgame = true
+    }
+    function langcolorchange() {
+        if (__currentLanguage == "english") {
+            __engbtncolor = "#69BC0C"
+            __nepbtncolor = "#AC724F"
+        } else {
+            __engbtncolor = "#AC724F"
+            __nepbtncolor = "#69BC0C"
+        }
     }
 
     Image {
@@ -56,47 +76,66 @@ FocusScope {
     }
 
     //scorecard and lives
-    Item {
+    Rectangle {
+
+        width: _win.width
+        height: 100
+        color: "transparent"
 
         anchors {
             left: parent.left
             top: parent.top
         }
+        Image {
+            id: _left
+            source: "qrc:/assets/assets/img/images-gamemode/left.png"
+            scale: 0.55
+
+            fillMode: Image.PreserveAspectFit
+            anchors {
+                left: parent.left
+                top: parent.top
+                topMargin: -112
+                leftMargin: -230
+            }
+        }
+
+        Image {
+            id: _right
+            source: "qrc:/assets/assets/img/images-gamemode/right.png"
+
+            fillMode: Image.PreserveAspectFit
+            scale: 0.55
+            anchors {
+                right: parent.right
+                top: parent.top
+                topMargin: -112
+                rightMargin: -200
+            }
+        }
+
         //high scorecard
         Rectangle {
             id: _highscore
 
             width: 190
             height: 40
-            radius: 10
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0
-                    color: "#1E3F66"
-                }
-                GradientStop {
-                    position: 0.33
-                    color: "#2E5984"
-                }
-                GradientStop {
-                    position: 1.0
-                    color: "#528AAE"
-                }
-            }
+            color: "transparent"
 
             anchors {
-                leftMargin: -10
-                topMargin: 12
-                left: parent.left
+                rightMargin: 0
+                topMargin: -3
+                horizontalCenter: _right.horizontalCenter
                 top: parent.top
             }
             Text {
                 id: _highscoreTxt
-                text: "High Score"
-                color: "white"
-                font.family: __lessonFont
+                text: "High Score:"
+                color: "#260600"
+                font.family: __gamefont
+                font.weight: 10
 
-                font.pixelSize: 22
+                font.pixelSize: 20
 
                 anchors {
 
@@ -106,14 +145,14 @@ FocusScope {
                 }
                 Text {
                     text: __highscore
-                    color: "white"
-                    font.family: __lessonFont
+                    color: "#69BC0C"
+                    font.family: __gamefont
 
-                    font.pixelSize: 22
+                    font.pixelSize: 20
 
                     anchors {
                         left: parent.right
-                        leftMargin: 5
+                        leftMargin: 6
                     }
                 }
             }
@@ -125,35 +164,22 @@ FocusScope {
 
             width: 190
             height: 40
-            radius: 10
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0
-                    color: "#1E3F66"
-                }
-                GradientStop {
-                    position: 0.33
-                    color: "#2E5984"
-                }
-                GradientStop {
-                    position: 1.0
-                    color: "#528AAE"
-                }
-            }
+            color: "transparent"
 
             anchors {
-                leftMargin: -10
-                topMargin: 12
-                left: parent.left
+                leftMargin: 0
+                topMargin: -9
+                horizontalCenter: _right.horizontalCenter
                 top: _highscore.bottom
             }
             Text {
                 id: _scoreTxt
-                text: "Score"
-                color: "white"
-                font.family: __lessonFont
+                text: "Score:"
+                color: "#260600"
+                font.family: __gamefont
+                font.bold: true
 
-                font.pixelSize: 22
+                font.pixelSize: 28
 
                 anchors {
 
@@ -163,14 +189,15 @@ FocusScope {
                 }
                 Text {
                     text: __score
-                    color: "white"
-                    font.family: __lessonFont
+                    color: "#69BC0C"
+                    font.family: __gamefont
+                    font.bold: true
 
-                    font.pixelSize: 22
+                    font.pixelSize: 28
 
                     anchors {
                         left: parent.right
-                        leftMargin: 5
+                        leftMargin: 7
                     }
                 }
             }
@@ -182,36 +209,92 @@ FocusScope {
             id: _lives
             anchors {
                 leftMargin: 40
-                topMargin: 12
+                topMargin: 10
                 left: parent.left
-                top: _score.bottom
+                top: parent.top
+            }
+
+            Text {
+                id: _livetxt
+                text: "Lives: "
+                color: "#260600"
+                font.family: __gamefont
+
+                font.pixelSize: 30
+                anchors {
+
+                    left: parent.left
+                    leftMargin: -25
+                    top: _lives.top
+                }
+            }
+            Image {
+                id: _live3dead
+                source: "qrc:/assets/assets/img/images-gamemode/dead.png"
+                width: 35
+                height: 32
+                anchors {
+                    verticalCenter: _live3.verticalCenter
+                    horizontalCenter: _live3.horizontalCenter
+                }
+            }
+            Image {
+                id: _live2dead
+                source: "qrc:/assets/assets/img/images-gamemode/dead.png"
+                width: 35
+                height: 32
+                anchors {
+                    verticalCenter: _live2.verticalCenter
+                    horizontalCenter: _live2.horizontalCenter
+                }
+            }
+            Image {
+                id: _live1dead
+                source: "qrc:/assets/assets/img/images-gamemode/dead.png"
+                width: 35
+                height: 32
+                anchors {
+                    verticalCenter: _live1.verticalCenter
+                    horizontalCenter: _live1.horizontalCenter
+                }
             }
             Image {
                 id: _live3
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
-                width: 25
-                height: 25
+                width: 35
+                height: 32
                 visible: live3_visible
+                anchors {
+
+                    left: _livetxt.right
+
+                    top: _lives.top
+                    topMargin: 7
+                }
             }
             Image {
                 id: _live2
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
-                width: 25
-                height: 25
+                width: 35
+                height: 32
                 anchors {
-                    leftMargin: 5
+                    leftMargin: 8
                     left: _live3.right
+                    top: _lives.top
+                    topMargin: 7
                 }
                 visible: live2_visible
             }
             Image {
                 id: _live1
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
-                width: 25
-                height: 25
+                width: 35
+                height: 32
                 anchors {
-                    leftMargin: 5
+                    leftMargin: 8
                     left: _live2.right
+                    top: _lives.top
+                    topMargin: 7
                 }
                 visible: live1_visible
             }
@@ -236,6 +319,524 @@ FocusScope {
             z: 1
             width: _win.width
             height: _win.height
+        }
+    }
+    //start screen
+    Rectangle {
+        id: _startscreen
+        z: 2
+        visible: newgame
+        color: "transparent"
+        focus: newgame
+
+        width: 750
+        height: 420
+        anchors {
+
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        Image {
+            id: _ply
+            source: "qrc:/assets/assets/img/images-gamemode/plyboard.png"
+
+            anchors {
+
+                left: parent.left
+                top: parent.top
+                topMargin: 30
+            }
+
+            width: parent.width
+            height: parent.height
+        }
+
+        //tutorial txt
+        Rectangle {
+
+            id: _tutorial
+            width: parent.width / 2 - 30
+            height: 100
+            color: "transparent"
+
+            anchors {
+                top: _ply.top
+                left: _ply.left
+                topMargin: 25
+                leftMargin: 50
+            }
+
+            Text {
+                id: _tut1
+                text: "How To Play: "
+                color: "#55321B"
+                font.pixelSize: 30
+                font.bold: true
+                font.family: __gamefont
+                anchors {
+
+                    top: parent.top
+                    left: parent.left
+                }
+            }
+
+            Text {
+                id: _tut2
+                width: parent.width
+                text: "Navigate your character by jumping on logs while typing the given words accurately. Your goal is to reach the highest score possible before running out of lives. Each log bears a word, and you must type it correctly to make your character jump. Be quick and precise, as every mistake will cost you a life."
+                color: "#260600"
+                font.pixelSize: 15
+                font.family: __gamefont
+                anchors {
+                    top: _tut1.bottom
+                    left: _tut1.left
+                    topMargin: 16
+                }
+                wrapMode: Text.WordWrap
+            }
+            Text {
+                id: _tut3
+                width: parent.width
+                text: "Ready to test your typing skills and reflexes? Let the game begin!"
+                color: "#260600"
+                font.pixelSize: 15
+                font.family: __gamefont
+                anchors {
+                    top: _tut2.bottom
+                    left: _tut1.left
+                    topMargin: 8
+                }
+                wrapMode: Text.WordWrap
+            }
+        }
+
+        //language selection buttons
+        Rectangle {
+            id: _langselect
+            width: parent.width / 2 - 40
+            height: 100
+            color: "transparent"
+
+            anchors {
+                top: _ply.top
+                right: _ply.right
+                topMargin: 25
+                rightMargin: 0
+            }
+            Text {
+                id: _lang1
+                text: "Select Language: "
+                color: "#55321B"
+                font.pixelSize: 30
+                font.bold: true
+                font.family: __gamefont
+                anchors {
+
+                    top: parent.top
+                    left: parent.left
+                }
+            }
+            Rectangle {
+                id: _langeng
+                color: "#55321B"
+                width: 125
+                height: 36
+                radius: 10
+                anchors {
+                    left: parent.left
+                    top: _lang1.bottom
+                    topMargin: 20
+                    leftMargin: 0
+                }
+                Text {
+                    text: "English"
+                    color: __engbtncolor
+                    font.family: __gamefont
+                    font.pixelSize: 18
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: _languagemousearea
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+                    onClicked: {
+                        lessonObj.setCurrentLanguage("nepali")
+                        gameObj.setCurrentLanguage("nepali")
+                        layoutSwitcher.activateLayout("english")
+                        __currentLanguage = "english"
+                        __lessonFont = _NotoSansMono.name
+                        __lessonFontSize = 24
+                        __lessonFontSpacing = 1
+
+                        resetgame()
+                    }
+                }
+            }
+            Rectangle {
+                id: _langnep
+                color: "#55321B"
+                width: 125
+                height: 36
+                radius: 10
+                anchors {
+                    left: _langeng.right
+                    top: _lang1.bottom
+                    topMargin: 20
+                    leftMargin: 30
+                }
+                Text {
+                    text: "Nepali"
+                    color: __nepbtncolor
+                    font.family: __gamefont
+                    font.pixelSize: 18
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: _languagemousearea2
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+                    onClicked: {
+                        lessonObj.setCurrentLanguage("english")
+                        gameObj.setCurrentLanguage("english")
+                        layoutSwitcher.activateLayout("nepali")
+                        __currentLanguage = "nepali"
+                        __lessonFont = _NotoSansDevanagari.name
+                        __lessonFontSize = 30
+                        __lessonFontSpacing = 3
+
+                        resetgame()
+                    }
+                }
+            }
+        }
+        AnimatedImage {
+
+            source: "qrc:/assets/assets/img/images-gamemode/gamerobot.gif"
+            mirror: false
+            scale: 0.82
+
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                bottomMargin: -60
+                rightMargin: 38
+            }
+        }
+        //startbutton
+        Rectangle {
+            id: _startbtn
+            color: "#55321B"
+            width: 200
+            height: 60
+            radius: 10
+            anchors {
+                left: parent.left
+                bottom: parent.bottom
+
+                leftMargin: 110
+            }
+            Text {
+                text: "START"
+                color: "#AC724F"
+                font.family: __gamefont
+                font.pixelSize: 35
+                font.bold: true
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+            MouseArea {
+
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+                onClicked: {
+                    newgame = false
+                }
+            }
+        }
+    }
+
+    //gameover area
+    Rectangle {
+        id: gameoverscreen
+        z: 2
+        visible: res_visibility
+        color: "transparent"
+
+        width: 750
+        height: 420
+        anchors {
+
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        Image {
+            id: _ply1
+            source: "qrc:/assets/assets/img/images-gamemode/plyboard.png"
+
+            anchors {
+
+                left: parent.left
+                top: parent.top
+                topMargin: 30
+            }
+
+            width: parent.width
+            height: parent.height
+        }
+
+        Rectangle {
+
+            id: _tutorial1
+            width: parent.width / 2 - 60
+            height: 100
+            color: "transparent"
+
+            anchors {
+                top: _ply1.top
+                left: _ply1.left
+                topMargin: 50
+                leftMargin: 50
+            }
+
+            Text {
+                id: _gameovertxt
+                text: "GAME OVER!"
+                color: "#69BC0C"
+                font.pixelSize: 50
+                font.bold: true
+                font.family: __gamefont
+                anchors {
+
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+            Text {
+                id: _score1
+
+                text: "Score:"
+                color: "#260600"
+                font.pixelSize: 30
+                font.family: __gamefont
+                anchors {
+                    top: _gameovertxt.bottom
+                    horizontalCenter: parent.horizontalCenter
+                    topMargin: 30
+                    leftMargin: -10
+                }
+            }
+            Text {
+                id: _score1txt
+
+                text: __score
+                color: "#69BC0C"
+                font.pixelSize: 30
+                font.family: __gamefont
+                anchors {
+                    left: _score1.right
+                    top: _score1.top
+                    leftMargin: 10
+                }
+            }
+            Text {
+                id: _highscore1
+
+                text: "High Score:"
+                color: "#260600"
+                font.pixelSize: 30
+                font.family: __gamefont
+                anchors {
+                    top: _score1.bottom
+                    horizontalCenter: parent.horizontalCenter
+                    topMargin: 30
+                    leftMargin: -10
+                }
+            }
+            Text {
+                id: _highscore1txt
+
+                text: __highscore
+                color: "#69BC0C"
+                font.pixelSize: 30
+                font.family: __gamefont
+                anchors {
+                    left: _highscore1.right
+                    top: _highscore1.top
+                    leftMargin: 10
+                }
+            }
+        }
+
+        //language selection buttons
+        Rectangle {
+            id: _langselect1
+            width: parent.width / 2 - 40
+            height: 100
+            color: "transparent"
+
+            anchors {
+                top: _ply1.top
+                right: _ply1.right
+                topMargin: 30
+                rightMargin: 0
+            }
+            Text {
+                id: _lang11
+                text: "Select Language: "
+                color: "#55321B"
+                font.pixelSize: 30
+                font.bold: true
+                font.family: __gamefont
+                anchors {
+
+                    top: parent.top
+                    left: parent.left
+                }
+            }
+            Rectangle {
+                id: _langeng1
+                color: "#55321B"
+                width: 125
+                height: 36
+                radius: 10
+                anchors {
+                    left: parent.left
+                    top: _lang11.bottom
+                    topMargin: 20
+                    leftMargin: 0
+                }
+                Text {
+                    text: "English"
+                    color: __engbtncolor
+                    font.family: __gamefont
+                    font.pixelSize: 18
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: _languagemousearea1
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+                    onClicked: {
+                        lessonObj.setCurrentLanguage("nepali")
+                        gameObj.setCurrentLanguage("nepali")
+                        layoutSwitcher.activateLayout("english")
+                        __currentLanguage = "english"
+                        __lessonFont = _NotoSansMono.name
+                        __lessonFontSize = 24
+                        __lessonFontSpacing = 1
+
+                        resetgame()
+                    }
+                }
+            }
+            Rectangle {
+                id: _langnep1
+                color: "#55321B"
+                width: 125
+                height: 36
+                radius: 10
+                anchors {
+                    left: _langeng1.right
+                    top: _lang11.bottom
+                    topMargin: 20
+                    leftMargin: 30
+                }
+                Text {
+                    text: "Nepali"
+                    color: __nepbtncolor
+                    font.family: __gamefont
+                    font.pixelSize: 18
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: _languagemousearea11
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    hoverEnabled: true
+                    onClicked: {
+                        lessonObj.setCurrentLanguage("english")
+                        gameObj.setCurrentLanguage("english")
+                        layoutSwitcher.activateLayout("nepali")
+                        __currentLanguage = "nepali"
+                        __lessonFont = _NotoSansDevanagari.name
+                        __lessonFontSize = 30
+                        __lessonFontSpacing = 3
+
+                        resetgame()
+                    }
+                }
+            }
+        }
+
+        AnimatedImage {
+
+            source: "qrc:/assets/assets/img/images-gamemode/gamerobot.gif"
+            mirror: false
+            scale: 0.82
+
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                bottomMargin: -60
+                rightMargin: 38
+            }
+        }
+        //restartbutton
+        Rectangle {
+            id: _restartbtn
+            color: "#55321B"
+            width: _tutorial1.width
+            height: 60
+            radius: 10
+            anchors {
+                horizontalCenter: _tutorial1.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: 30
+            }
+            Text {
+                text: "PLAY AGAIN"
+                color: "#69BC0C"
+                font.family: __gamefont
+                font.pixelSize: 35
+                font.bold: true
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+            MouseArea {
+
+                anchors.fill: _restartbtn
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+                onClicked: {
+                    res_visibility = false
+                    __score = 0
+
+                    resetgame()
+                }
+            }
         }
     }
 
@@ -442,129 +1043,6 @@ FocusScope {
                 }
             }
         ]
-        //language change button
-        Rectangle {
-            id: _languagechange
-
-            width: 190
-            height: 40
-            radius: 10
-
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0
-                    color: "#1E3F66"
-                }
-                GradientStop {
-                    position: 0.33
-                    color: "#2E5984"
-                }
-                GradientStop {
-                    position: 1.0
-                    color: "#528AAE"
-                }
-            }
-
-            anchors {
-                top: parent.top
-                right: parent.right
-                rightMargin: -295
-                topMargin: 10
-            }
-            Text {
-                id: _langtxt
-                text: __currentLanguage
-                color: "white"
-                font.family: __lessonFont
-                font.bold: true
-                font.pixelSize: 20
-
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-            }
-
-            MouseArea {
-                id: _languagemousearea
-                anchors.fill: _languagechange
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                onClicked: {
-                    gameObj.setCurrentLanguage(__currentLanguage)
-                    lessonObj.setCurrentLanguage(__currentLanguage)
-                    if (__currentLanguage === "english") {
-                        layoutSwitcher.activateLayout("nepali")
-                        __currentLanguage = "nepali"
-                        __lessonFont = _NotoSansDevanagari.name
-                        __lessonFontSize = 30
-                        __lessonFontSpacing = 3
-                    } else {
-                        layoutSwitcher.activateLayout("english")
-                        __currentLanguage = "english"
-                        __lessonFont = _NotoSansMono.name
-                        __lessonFontSize = 24
-                        __lessonFontSpacing = 1
-                    }
-
-                    resetgame()
-                }
-            }
-        }
-
-        // restart button
-        Rectangle {
-            id: _restart
-
-            width: 250
-            height: 80
-            z: 2
-            radius: 10
-            visible: res_visibility
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0
-                    color: "#1E3F66"
-                }
-                GradientStop {
-                    position: 0.33
-                    color: "#2E5984"
-                }
-                GradientStop {
-                    position: 1.0
-                    color: "#528AAE"
-                }
-            }
-
-            anchors {
-                verticalCenter: parent.verticalCenter
-                horizontalCenter: parent.horizontalCenter
-            }
-            Text {
-                id: _restxt
-                text: "Restart"
-                color: "white"
-                font.family: __lessonFont
-                font.bold: true
-                font.pixelSize: 40
-
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-            }
-
-            MouseArea {
-                id: _resmousearea
-                anchors.fill: _restart
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                onClicked: {
-
-                    resetgame()
-                }
-            }
-        }
 
         // player here
         AnimatedImage {
@@ -623,9 +1101,8 @@ FocusScope {
             font.pixelSize: 22
             color: "transparent"
             cursorVisible: false
-            focus: true
+            focus: !newgame
 
-            //activeFocusOnTab: true
             visible: false
 
             property bool keystrokeIsPrintable: false

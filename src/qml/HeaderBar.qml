@@ -126,7 +126,7 @@ Item {
     on__CurrentViewChanged: {
         _practiceMode.__lessonState = "LessonOff"
         _practiceMode.js_finishLesson()
-        _gameMode.resetgame()
+        _gameMode.restartgame()
     }
 
     states: [
