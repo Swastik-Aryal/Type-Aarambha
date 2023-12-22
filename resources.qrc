@@ -14,6 +14,11 @@
         <file>assets/img/images-gamemode/gamerobot.gif</file>
         <file>assets/img/images-gamemode/live.png</file>
         <file>assets/img/images-gamemode/stick.png</file>
+        <file>assets/img/images-gamemode/dead.png</file>
+        <file>assets/img/images-gamemode/twig.png</file>
+        <file>assets/img/images-gamemode/plyboard.png</file>
+        <file>assets/img/images-gamemode/left.png</file>
+        <file>assets/img/images-gamemode/right.png</file>
 
     </qresource>
 </RCC>
