@@ -10,21 +10,23 @@ FocusScope {
 
     property int __score: 0
     property int __currentLog: 1
-    property string _lesson: "LessonReady"
-    property bool live1_visible: true
-    property bool live2_visible: true
-    property bool live3_visible: true
-    property int liveslosttotal: 0
     property int liveslost: 0
-    property bool res_visibility: false
     property int __highscore: 0
-    property bool wrongchar: false
-    property bool newgame: false
+    property int liveslosttotal: 0
+    property string _lesson: "LessonReady"
     property string __gamefont: _NotoSansMono.name
     property string __engbtncolor: "#69BC0C"
     property string __nepbtncolor: "#AC724F"
+    property bool live1_visible: true
+    property bool live2_visible: true
+    property bool live3_visible: true
+    property bool res_visibility: false
+    property bool __wrongchar: false
+    property bool __newgame: false
 
+    //function to reset the score, position of logs and lives
     function resetgame() {
+
         live1_visible = true
         live2_visible = true
         live3_visible = true
@@ -43,19 +45,25 @@ FocusScope {
         __currentLog = 1
         _lesson = "LessonReady"
 
-        wrongchar = false
+        __wrongchar = false
         gameObj.reset()
         _textInput.text = ""
         langcolorchange()
     }
+
+    //function to reset and make start screen visible
     function restartgame() {
+
         res_visibility = false
         __score = 0
         resetgame()
         langcolorchange()
-        newgame = true
+        __newgame = true
     }
+
+    //function to set language button colors
     function langcolorchange() {
+
         if (__currentLanguage == "english") {
             __engbtncolor = "#69BC0C"
             __nepbtncolor = "#AC724F"
@@ -65,6 +73,7 @@ FocusScope {
         }
     }
 
+    //bg image
     Image {
 
         id: bg
@@ -87,6 +96,7 @@ FocusScope {
             top: parent.top
         }
         Image {
+
             id: _left
             source: "qrc:/assets/assets/img/images-gamemode/left.png"
             scale: 0.55
@@ -101,9 +111,9 @@ FocusScope {
         }
 
         Image {
+
             id: _right
             source: "qrc:/assets/assets/img/images-gamemode/right.png"
-
             fillMode: Image.PreserveAspectFit
             scale: 0.55
             anchors {
@@ -116,8 +126,8 @@ FocusScope {
 
         //high scorecard
         Rectangle {
-            id: _highscore
 
+            id: _highscore
             width: 190
             height: 40
             color: "transparent"
@@ -128,22 +138,24 @@ FocusScope {
                 horizontalCenter: _right.horizontalCenter
                 top: parent.top
             }
+
             Text {
+
                 id: _highscoreTxt
                 text: "High Score:"
                 color: "#260600"
                 font.family: __gamefont
                 font.weight: 10
-
                 font.pixelSize: 20
-
                 anchors {
 
                     left: parent.left
                     leftMargin: 25
                     verticalCenter: parent.verticalCenter
                 }
+
                 Text {
+
                     text: __highscore
                     color: "#69BC0C"
                     font.family: __gamefont
@@ -160,8 +172,8 @@ FocusScope {
 
         //scorecard
         Rectangle {
-            id: _score
 
+            id: _score
             width: 190
             height: 40
             color: "transparent"
@@ -172,13 +184,14 @@ FocusScope {
                 horizontalCenter: _right.horizontalCenter
                 top: _highscore.bottom
             }
+
             Text {
+
                 id: _scoreTxt
                 text: "Score:"
                 color: "#260600"
                 font.family: __gamefont
                 font.bold: true
-
                 font.pixelSize: 28
 
                 anchors {
@@ -187,12 +200,13 @@ FocusScope {
                     leftMargin: 25
                     verticalCenter: parent.verticalCenter
                 }
+
                 Text {
+
                     text: __score
                     color: "#69BC0C"
                     font.family: __gamefont
                     font.bold: true
-
                     font.pixelSize: 28
 
                     anchors {
@@ -207,6 +221,7 @@ FocusScope {
         Rectangle {
 
             id: _lives
+
             anchors {
                 leftMargin: 40
                 topMargin: 10
@@ -215,102 +230,120 @@ FocusScope {
             }
 
             Text {
+
                 id: _livetxt
                 text: "Lives: "
                 color: "#260600"
                 font.family: __gamefont
-
                 font.pixelSize: 30
-                anchors {
 
+                anchors {
                     left: parent.left
                     leftMargin: -25
                     top: _lives.top
                 }
             }
+
             Image {
+
                 id: _live3dead
                 source: "qrc:/assets/assets/img/images-gamemode/dead.png"
                 width: 35
                 height: 32
+
                 anchors {
                     verticalCenter: _live3.verticalCenter
                     horizontalCenter: _live3.horizontalCenter
                 }
             }
+
             Image {
+
                 id: _live2dead
                 source: "qrc:/assets/assets/img/images-gamemode/dead.png"
                 width: 35
                 height: 32
+
                 anchors {
                     verticalCenter: _live2.verticalCenter
                     horizontalCenter: _live2.horizontalCenter
                 }
             }
+
             Image {
+
                 id: _live1dead
                 source: "qrc:/assets/assets/img/images-gamemode/dead.png"
                 width: 35
                 height: 32
+
                 anchors {
                     verticalCenter: _live1.verticalCenter
                     horizontalCenter: _live1.horizontalCenter
                 }
             }
+
             Image {
+
                 id: _live3
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
                 width: 35
                 height: 32
                 visible: live3_visible
+
                 anchors {
-
                     left: _livetxt.right
-
                     top: _lives.top
                     topMargin: 7
                 }
             }
+
             Image {
+
                 id: _live2
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
                 width: 35
                 height: 32
+                visible: live2_visible
+
                 anchors {
                     leftMargin: 8
                     left: _live3.right
                     top: _lives.top
                     topMargin: 7
                 }
-                visible: live2_visible
             }
+
             Image {
+
                 id: _live1
                 source: "qrc:/assets/assets/img/images-gamemode/live.png"
                 width: 35
                 height: 32
+                visible: live1_visible
+
                 anchors {
                     leftMargin: 8
                     left: _live2.right
                     top: _lives.top
                     topMargin: 7
                 }
-                visible: live1_visible
             }
         }
 
-        //for blureffect for error
+        //for red tint effect after error
         Rectangle {
+
             id: _wrong
             color: "red"
             opacity: 0.5
-            visible: wrongchar
+            visible: __wrongchar
             z: 1
             width: _win.width
             height: _win.height
         }
-        //for blureffect after death
+
+        //for red tint effect after death (yes, I know same thing defined twice.. but this fixes the "red tint dissapearing on spam" bug.)
         Rectangle {
 
             color: "red"
@@ -321,35 +354,35 @@ FocusScope {
             height: _win.height
         }
     }
+
     //start screen
     Rectangle {
+
         id: _startscreen
         z: 2
-        visible: newgame
+        visible: __newgame
         color: "transparent"
-        focus: newgame
-
+        focus: __newgame
         width: 750
         height: 420
-        anchors {
 
+        anchors {
             verticalCenter: parent.verticalCenter
             horizontalCenter: parent.horizontalCenter
         }
 
         Image {
+
             id: _ply
             source: "qrc:/assets/assets/img/images-gamemode/plyboard.png"
+            width: parent.width
+            height: parent.height
 
             anchors {
-
                 left: parent.left
                 top: parent.top
                 topMargin: 30
             }
-
-            width: parent.width
-            height: parent.height
         }
 
         //tutorial txt
@@ -368,12 +401,14 @@ FocusScope {
             }
 
             Text {
+
                 id: _tut1
                 text: "How To Play: "
                 color: "#55321B"
                 font.pixelSize: 30
                 font.bold: true
                 font.family: __gamefont
+
                 anchors {
 
                     top: parent.top
@@ -382,37 +417,43 @@ FocusScope {
             }
 
             Text {
+
                 id: _tut2
                 width: parent.width
                 text: "Navigate your character by jumping on logs while typing the given words accurately. Your goal is to reach the highest score possible before running out of lives. Each log bears a word, and you must type it correctly to make your character jump. Be quick and precise, as every mistake will cost you a life."
                 color: "#260600"
                 font.pixelSize: 15
                 font.family: __gamefont
+                wrapMode: Text.WordWrap
+
                 anchors {
                     top: _tut1.bottom
                     left: _tut1.left
                     topMargin: 16
                 }
-                wrapMode: Text.WordWrap
             }
+
             Text {
+
                 id: _tut3
                 width: parent.width
                 text: "Ready to test your typing skills and reflexes? Let the game begin!"
                 color: "#260600"
                 font.pixelSize: 15
                 font.family: __gamefont
+                wrapMode: Text.WordWrap
+
                 anchors {
                     top: _tut2.bottom
                     left: _tut1.left
                     topMargin: 8
                 }
-                wrapMode: Text.WordWrap
             }
         }
 
         //language selection buttons
         Rectangle {
+
             id: _langselect
             width: parent.width / 2 - 40
             height: 100
@@ -425,6 +466,7 @@ FocusScope {
                 rightMargin: 0
             }
             Text {
+
                 id: _lang1
                 text: "Select Language: "
                 color: "#55321B"
@@ -438,6 +480,7 @@ FocusScope {
                 }
             }
             Rectangle {
+
                 id: _langeng
                 color: "#55321B"
                 width: 125
@@ -449,7 +492,9 @@ FocusScope {
                     topMargin: 20
                     leftMargin: 0
                 }
+
                 Text {
+
                     text: "English"
                     color: __engbtncolor
                     font.family: __gamefont
@@ -459,7 +504,9 @@ FocusScope {
                         verticalCenter: parent.verticalCenter
                     }
                 }
+
                 MouseArea {
+
                     id: _languagemousearea
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
@@ -518,6 +565,8 @@ FocusScope {
                 }
             }
         }
+
+        //dancing cutie
         AnimatedImage {
 
             source: "qrc:/assets/assets/img/images-gamemode/gamerobot.gif"
@@ -531,6 +580,7 @@ FocusScope {
                 rightMargin: 38
             }
         }
+
         //startbutton
         Rectangle {
             id: _startbtn
@@ -556,12 +606,11 @@ FocusScope {
                 }
             }
             MouseArea {
-
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {
-                    newgame = false
+                    __newgame = false
                 }
             }
         }
@@ -707,6 +756,7 @@ FocusScope {
                     left: parent.left
                 }
             }
+            //english button
             Rectangle {
                 id: _langeng1
                 color: "#55321B"
@@ -747,6 +797,8 @@ FocusScope {
                     }
                 }
             }
+
+            //nepali button
             Rectangle {
                 id: _langnep1
                 color: "#55321B"
@@ -789,8 +841,8 @@ FocusScope {
             }
         }
 
+        //dancing cutie
         AnimatedImage {
-
             source: "qrc:/assets/assets/img/images-gamemode/gamerobot.gif"
             mirror: false
             scale: 0.82
@@ -802,6 +854,7 @@ FocusScope {
                 rightMargin: 38
             }
         }
+
         //restartbutton
         Rectangle {
             id: _restartbtn
@@ -809,11 +862,13 @@ FocusScope {
             width: _tutorial1.width
             height: 60
             radius: 10
+
             anchors {
                 horizontalCenter: _tutorial1.horizontalCenter
                 bottom: parent.bottom
                 bottomMargin: 30
             }
+
             Text {
                 text: "PLAY AGAIN"
                 color: "#69BC0C"
@@ -825,15 +880,14 @@ FocusScope {
                     verticalCenter: parent.verticalCenter
                 }
             }
-            MouseArea {
 
+            MouseArea {
                 anchors.fill: _restartbtn
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {
                     res_visibility = false
                     __score = 0
-
                     resetgame()
                 }
             }
@@ -845,10 +899,8 @@ FocusScope {
 
         id: _mainRect
         color: "transparent"
-
         height: _win.height
         width: 450
-
         anchors.centerIn: parent
         state: "1_down"
 
@@ -873,6 +925,7 @@ FocusScope {
 
             y: 300
         }
+
         Obstacle {
             id: _log1
             width: 250
@@ -884,6 +937,7 @@ FocusScope {
             y: 450 + height / 1.5
         }
 
+        //states for each position of log when the character jumps
         states: [
             State {
                 name: "1_down"
@@ -934,7 +988,7 @@ FocusScope {
                 }
             }
         ]
-
+        //transitions for when the character jumps
         transitions: [
             Transition {
                 from: "1_down"
@@ -989,6 +1043,7 @@ FocusScope {
                     to: 450 + _log1.height / 1.5
                     duration: 1200
                 }
+
                 SequentialAnimation {
 
                     NumberAnimation {
@@ -1044,7 +1099,7 @@ FocusScope {
             }
         ]
 
-        // player here
+        // dancing cutie (now in action)
         AnimatedImage {
 
             id: _player
@@ -1053,13 +1108,13 @@ FocusScope {
             width: 310
             height: 364
             scale: 0.46
-            //x:_log1.x-20 ; y:_log1.y-160
             anchors {
                 bottom: _log1.top
                 horizontalCenter: _log1.horizontalCenter
                 bottomMargin: -135
             }
 
+            //animations when the player jumps
             ScaleAnimator {
                 id: _scaler1
                 target: _player
@@ -1078,6 +1133,7 @@ FocusScope {
             }
         }
 
+        //text shown on top of the logs(obtained from lesson.cpp)
         Text {
             id: _textPrompt
 
@@ -1094,6 +1150,7 @@ FocusScope {
             wrapMode: Text.WordWrap
         }
 
+        // reads the text typed by the user (not visible)
         TextInput {
 
             id: _textInput
@@ -1101,15 +1158,14 @@ FocusScope {
             font.pixelSize: 22
             color: "transparent"
             cursorVisible: false
-            focus: !newgame
-
+            focus: !__newgame
             visible: false
 
             property bool keystrokeIsPrintable: false
-            property bool backspacePressed: false
             property bool spacePressed: false
             property bool wordcomplete: false
 
+            //function to restart the test
             function restartTest() {
 
                 _lesson = "LessonReady"
@@ -1118,26 +1174,30 @@ FocusScope {
                 gameObj.reset()
             }
 
+            //timer and function used together to make the red tint effect after error possible
             Timer {
                 id: timeoutTimer
                 interval: 250
                 repeat: false
 
                 onTriggered: {
-                    wrongchar = false
+                    __wrongchar = false
                 }
             }
 
             function wrong() {
-                wrongchar = true
+                __wrongchar = true
                 timeoutTimer.start()
             }
+
+            //detect keyboard press
             Keys.onPressed: event => {
 
                                 if (event.key === Qt.Key_Backspace) {
-                                    // Consume the Backspace key event, preventing it from reaching the TextInput
+                                    // Consumes the Backspace key event, preventing it from reaching the TextInput
                                     event.accepted = true
                                 }
+                                //to check whether the keystroke is and actual text
                                 keystrokeIsPrintable = event.text.length > 0
 
                                 spacePressed = event.key === Qt.Key_Space
@@ -1146,102 +1206,109 @@ FocusScope {
             onTextEdited: {
 
                 if (_lesson === "LessonReady" && keystrokeIsPrintable) {
-                    // start the test automatically
+                    // start the test
                     // when the user starts typing
                     _lesson = "LessonActive"
                 }
 
-                if (_lesson === "LessonActive") {
+                if (_lesson === "LessonActive" && keystrokeIsPrintable) {
 
-                    if (keystrokeIsPrintable || spacePressed
-                            || backspacePressed) {
+                    // track progress and update text prompt
+                    gameObj.processgameKbInput(_textInput.text, "game")
 
-                        // track progress and update test prompt
-                        gameObj.processgameKbInput(_textInput.text,
-                                                   backspacePressed,
-                                                   spacePressed, "game")
+                    //checks if user makes mistake and updates the lives
+                    liveslost = gameObj.getTotalTypedChars(
+                                ) - gameObj.getCorrectChars()
 
-                        liveslost = gameObj.getTotalTypedChars(
-                                    ) - gameObj.getCorrectChars()
-                        if (liveslost != 0 && liveslosttotal !== liveslost) {
-                            liveslosttotal += 1
+                    if (liveslost != 0 && liveslosttotal !== liveslost) {
+                        liveslosttotal += 1
 
-                            if (liveslosttotal === 1 || liveslosttotal === 2) {
-                                wrong()
-                            }
+                        if (liveslosttotal === 1 || liveslosttotal === 2) {
+                            wrong()
+                        }
+                    }
+
+                    //end the game and trigger the gameover screen
+                    if (liveslosttotal === 3) {
+
+                        live3_visible = false
+                        res_visibility = true
+
+                        _lesson = "LessonEnded"
+                    } else {
+                        //check and update the lives icon
+                        if (liveslosttotal == 1) {
+                            live1_visible = false
+                        } else if (liveslosttotal == 2) {
+
+                            live2_visible = false
+                        }
+                    }
+
+                    //check if the current word is finished and execute the jump animation
+                    if (gameObj.lessonEnded) {
+                        if (__currentLog === 3) {
+
+                            _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
+                            _textPrompt.anchors.bottom = _log2.top
+
+                            _player.mirror = false
+
+                            __score = __score + 1
+
+                            _scaler1.start()
+
+                            _player.anchors.bottom = _log1.top
+                            _player.anchors.horizontalCenter = _log1.horizontalCenter
+
+                            _scaler1.stop()
+                            _scaler2.start()
+
+                            __currentLog = 1
+                            _mainRect.state = "1_down"
+                        } else if (__currentLog === 1) {
+
+                            _textPrompt.anchors.horizontalCenter = _log3.horizontalCenter
+                            _textPrompt.anchors.bottom = _log3.top
+
+                            _player.mirror = true
+                            __score = __score + 1
+
+                            _scaler1.start()
+
+                            _player.anchors.bottom = _log2.top
+                            _player.anchors.horizontalCenter = _log2.horizontalCenter
+
+                            _scaler1.stop()
+                            _scaler2.start()
+
+                            __currentLog = 2
+                            _mainRect.state = "2_down"
+                        } else if (__currentLog === 2) {
+                            _textPrompt.anchors.horizontalCenter = _log1.horizontalCenter
+                            _textPrompt.anchors.bottom = _log1.top
+
+                            _player.mirror = false
+                            __score = __score + 1
+
+                            _scaler1.start()
+
+                            _player.anchors.bottom = _log3.top
+                            _player.anchors.horizontalCenter = _log3.horizontalCenter
+
+                            _scaler1.stop()
+                            _scaler2.start()
+
+                            __currentLog = 3
+                            _mainRect.state = "3_down"
                         }
 
-                        if (liveslosttotal === 3) {
-
-                            live3_visible = false
-                            res_visibility = true
-
-                            _lesson = "LessonEnded"
-                        } else {
-
-                            if (liveslosttotal == 1) {
-
-                                live1_visible = false
-                            } else if (liveslosttotal == 2) {
-
-                                live2_visible = false
-                            }
+                        //update highscore
+                        if (__score > __highscore) {
+                            __highscore = __score
                         }
 
-                        if (gameObj.lessonEnded) {
-                            if (__currentLog === 3) {
-
-                                _textPrompt.anchors.horizontalCenter = _log2.horizontalCenter
-                                _textPrompt.anchors.bottom = _log2.top
-
-                                _player.mirror = false
-                                __score = __score + 1
-
-                                _player.anchors.bottom = _log1.top
-                                _player.anchors.horizontalCenter = _log1.horizontalCenter
-                                _scaler1.stop()
-                                _scaler2.start()
-
-                                __currentLog = 1
-                                _mainRect.state = "1_down"
-                            } else if (__currentLog === 1) {
-
-                                _textPrompt.anchors.horizontalCenter = _log3.horizontalCenter
-                                _textPrompt.anchors.bottom = _log3.top
-
-                                _player.mirror = true
-                                __score = __score + 1
-
-                                _scaler1.start()
-                                _mainRect.state = "2_down"
-                                _player.anchors.bottom = _log2.top
-                                _player.anchors.horizontalCenter = _log2.horizontalCenter
-                                _scaler1.stop()
-                                _scaler2.start()
-
-                                __currentLog = 2
-                            } else if (__currentLog === 2) {
-                                _textPrompt.anchors.horizontalCenter = _log1.horizontalCenter
-                                _textPrompt.anchors.bottom = _log1.top
-
-                                _player.mirror = false
-                                __score = __score + 1
-
-                                _scaler1.start()
-
-                                _player.anchors.bottom = _log3.top
-                                _player.anchors.horizontalCenter = _log3.horizontalCenter
-                                _scaler1.stop()
-                                _scaler2.start()
-
-                                __currentLog = 3
-                                _mainRect.state = "3_down"
-                            }
-                            if (__score > __highscore) {
-                                __highscore = __score
-                            }
-                            _textInput.text = ""
-                        }
+                        _textInput.text = ""
                     }
                 }
             }

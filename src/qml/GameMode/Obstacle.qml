@@ -1,5 +1,6 @@
 import QtQuick
 
+//item with the log png
 Item {
 
     Image {
