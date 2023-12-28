@@ -94,6 +94,7 @@ Item {
         running: _lesson.state === "LessonActive"
         onTriggered: {
             __lessonDuration += 16
+            console.log(__lessonDuration)
             if (lessonObj.lessonEnded) {
                 _lessonTimer.stop()
                 _statBar.__wpm = lessonObj.calculateWPM(
@@ -153,6 +154,7 @@ Item {
                                 if (event.key === Qt.Key_Escape) {
                                     _textInput.clear()
                                     __lessonDuration = 0
+                                    _lesson.state = "LessonReady"
                                     lessonObj.restart()
                                     _keyboardLayout.js_updateKeyboardHint()
                                 }
