@@ -30,8 +30,6 @@ public:
                                     bool spacePressed,
                                     const QString &currentMode);
     Q_INVOKABLE void processgameKbInput(const QString &input,
-                                        bool backspacePressed,
-                                        bool spacePressed,
                                         const QString &currentMode);
     Q_INVOKABLE QString getNextCharacter(const QString &userInput, bool spacePressed) const;
     Q_INVOKABLE float calculateWPM(unsigned lessonDuration) const;

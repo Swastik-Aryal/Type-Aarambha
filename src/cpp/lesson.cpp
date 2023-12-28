@@ -124,11 +124,9 @@ void Lesson::processKbInput(const QString &input,
 }
 
 void Lesson::processgameKbInput(const QString &input,
-                                bool backspacePressed,
-                                bool spacePressed,
                                 const QString &currentMode)
 {
-    // mode true means lesson
+
     QString initialcolor = "white";
     if (currentMode == "game") {
         initialcolor = "black";
@@ -138,18 +136,17 @@ void Lesson::processgameKbInput(const QString &input,
     bool resetTextPrompt = false;
     m_lessonEnded = false;
 
-    /* Update character counts only if keypress was not backspace. */
-    if (!backspacePressed) {
-        if (newCharIsCorrect(currentLessonWord, input)) {
-            m_correctChars++;
-        }
-        m_totalTypedChars++;
+    /* Update character counts*/
+
+    if (newCharIsCorrect(currentLessonWord, input)) {
+        m_correctChars++;
     }
+    m_totalTypedChars++;
+
     if (m_currentWordIdx + 1 == m_wordsPerSample && input.size() == currentLessonWord.size()){
         endLesson();
         sampleWordDataset();
         resetTextPrompt = true;
-
     }
 
     setCurrentWordColor(currentLessonWord, input, currentMode);
