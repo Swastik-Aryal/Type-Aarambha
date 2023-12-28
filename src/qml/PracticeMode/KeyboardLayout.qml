@@ -691,7 +691,7 @@ Item {
         //clear previous hints
         clearKeyboardHint()
 
-        if (state === "base") {
+        if (state === "base" && __shiftState === "base") {
             keySwitchOn(keyIso)
         } else if (state === "shift") {
             //light up shift
