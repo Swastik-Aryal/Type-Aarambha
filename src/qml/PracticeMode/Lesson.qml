@@ -256,41 +256,31 @@ Item {
         implicitWidth: parent.width * 0.17
         implicitHeight: parent.height * 0.08
         anchors {
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
+            centerIn: parent
             verticalCenterOffset: parent.height / 0.5
         }
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.centerIn: parent
-            spacing: 0
-            Rectangle {
-                color: "#4B5975"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 0.28
-                radius: 2
-                Text {
-                    text: "esc"
-                    font.family: _NotoSansMono.name
-                    font.pixelSize: parent.height * 0.70
-                    color: "#1B2028"
-                    anchors.centerIn: parent
-                }
+        Rectangle {
+            id: __escButton
+            color: "#4B5975"
+            width: parent.width * 0.18
+            height: parent.height
+            radius: 2
+            Text {
+                text: "esc"
+                font.family: _NotoSansMono.name
+                font.pixelSize: parent.height * 0.70
+                color: "#1B2028"
+                anchors.centerIn: parent
             }
-            Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredWidth: 1
-                Text {
-                    text: " - restart lesson"
-                    font.family: _NotoSansMono.name
-                    font.pixelSize: parent.height * 0.80
-                    color: "#4B5975"
-                    anchors.centerIn: parent
-                }
-            }
+        }
+
+        Text {
+            text: " - restart lesson"
+            font.family: _NotoSansMono.name
+            font.pixelSize: parent.height * 0.80
+            color: "#CCCCB5"
+            anchors.left: __escButton.right
         }
     }
 }
