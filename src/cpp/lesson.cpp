@@ -265,12 +265,6 @@ float Lesson::calculateWPM(unsigned lessonDuration) const
     return (wpm);
 }
 
-float Lesson::calculateTime(unsigned lessonDuration) const
-{
-    float __time = static_cast<float>(lessonDuration / 1000);
-    return (__time);
-}
-
 float Lesson::calculateAccuracy() const
 {
     float acc = static_cast<float>(m_correctChars) / m_totalTypedChars;
