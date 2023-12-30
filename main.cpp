@@ -1,14 +1,17 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "src/cpp/dataset.h"
 #include "src/cpp/layoutswitcher.h"
 #include "src/cpp/lesson.h"
+#include "src/cpp/lesson.h"
+#include "testresultsmodel.h"
+#include "resultssortfilterproxymodel.h"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
 
@@ -20,6 +23,14 @@ int main(int argc, char *argv[])
 
     Lesson *gameObj = new Lesson(worddDataset, 1, &app);
     engine.rootContext()->setContextProperty("gameObj", gameObj);
+
+    TestResultsModel *testResults = new TestResultsModel(&app);
+    testResults->loadFromFile(QFile("results.csv"));
+    ResultsSortFilterProxyModel *proxyModel = new ResultsSortFilterProxyModel(&app);
+    proxyModel->setSourceModel(testResults);
+
+    engine.rootContext()->setContextProperty("testResultsModel", testResults);
+    engine.rootContext()->setContextProperty("resultsProxyModel", proxyModel);
 
     const QUrl url(u"qrc:/main.qml"_qs);
     QObject::connect(

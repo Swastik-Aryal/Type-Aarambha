@@ -15,6 +15,8 @@ ApplicationWindow {
     minimumWidth: 1332
     minimumHeight: (minimumWidth / 16) * 9
 
+     onClosing: testResultsModel.saveToFile("results.csv")
+
     Rectangle {
         anchors.fill: parent
         color: "#1b2028"

@@ -5,6 +5,7 @@ import QtQuick.Layouts
 Item {
     id: _lesson
     property int __lessonDuration: 0
+    property int __lessonPassDuration: 0
     property alias __inputText: _textInput.text
     state: "lessonOff"
     property bool keystrokeIsPrintable: false
@@ -94,7 +95,12 @@ Item {
         running: _lesson.state === "LessonActive"
         onTriggered: {
             __lessonDuration += 16
-            console.log(__lessonDuration)
+             if (__lessonDuration == 0 || __lessonDuration % 960 == 0) {
+                __lessonPassDuration = lessonObj.calculateTime(__lessonDuration)
+                _userProfileMode.appendToWPMSeries(
+                            __lessonPassDuration,
+                            lessonObj.calculateWPM(__lessonDuration).toFixed(1))
+            }
             if (lessonObj.lessonEnded) {
                 _lessonTimer.stop()
                 _statBar.__wpm = lessonObj.calculateWPM(
@@ -104,6 +110,11 @@ Item {
                 _statBar.__incorrectChars = (lessonObj.getTotalTypedChars(
                                                  ) - lessonObj.getCorrectChars(
                                                  ))
+                __lessonDuration = lessonObj.calculateTime(__lessonDuration)
+                testResultsModel.appendEntry(_statBar.__wpm,
+                                             _statBar.__accuracy,
+                                             __lessonDuration)
+                                             //_userProfileMode.clearWPMSeries()
                 _lesson.js_finishLesson()
             }
         }

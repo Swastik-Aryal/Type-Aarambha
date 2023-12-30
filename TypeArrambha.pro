@@ -1,8 +1,11 @@
-QT += quick
+QT += qml quick charts
 SOURCES += \
         main.cpp \
         src/cpp/layoutswitcher.cpp \
-        src/cpp/lesson.cpp
+        src/cpp/lesson.cpp \
+        src/cpp/resultssortfilterproxymodel.cpp \
+        src/cpp/testresults.cpp \
+        src/cpp/testresultsmodel.cpp 
 
 resources.prefix = /$${TARGET}
 RESOURCES += \
@@ -25,7 +28,10 @@ INCLUDEPATH += src/cpp
 HEADERS += \
     src/cpp/layoutswitcher.h \
     src/cpp/dataset.h \
-    src/cpp/lesson.h
+    src/cpp/lesson.h \
+    src/cpp/resultssortfilterproxymodel.h \
+    src/cpp/testresults.h \
+    src/cpp/testresultsmodel.h
 
 LIBS += -luser32
 

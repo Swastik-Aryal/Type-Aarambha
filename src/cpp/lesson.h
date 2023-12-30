@@ -33,6 +33,7 @@ public:
                                         const QString &currentMode);
     Q_INVOKABLE QString getNextCharacter(const QString &userInput, bool spacePressed) const;
     Q_INVOKABLE float calculateWPM(unsigned lessonDuration) const;
+    Q_INVOKABLE float calculateTime(unsigned lessonDuration) const;
     Q_INVOKABLE float calculateAccuracy() const;
     Q_INVOKABLE unsigned getCorrectChars() const;
     Q_INVOKABLE unsigned getTotalTypedChars() const;
