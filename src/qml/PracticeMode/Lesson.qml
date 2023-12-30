@@ -5,7 +5,6 @@ import QtQuick.Layouts
 Item {
     id: _lesson
     property int __lessonDuration: 0
-    property int __lessonPassDuration: 0
     property alias __inputText: _textInput.text
     state: "lessonOff"
     property bool keystrokeIsPrintable: false
@@ -13,11 +12,11 @@ Item {
     property bool spacePressed: false
 
     implicitWidth: parent.width * 0.60
-    implicitHeight: parent.height * 0.24
+    implicitHeight: parent.height * 0.25
 
     anchors {
         centerIn: parent
-        verticalCenterOffset: -parent.height / 50
+        verticalCenterOffset: -parent.height / 30
     }
 
     states: [
@@ -90,15 +89,14 @@ Item {
     //timer for logging lesson time
     Timer {
         id: _lessonTimer
-        interval: 16
+        interval: 20
         repeat: true
         running: _lesson.state === "LessonActive"
         onTriggered: {
-            __lessonDuration += 16
-             if (__lessonDuration == 0 || __lessonDuration % 960 == 0) {
-                __lessonPassDuration = lessonObj.calculateTime(__lessonDuration)
+            __lessonDuration += 20
+            if (__lessonDuration == 0 || __lessonDuration % 1000 == 0) {
                 _userProfileMode.appendToWPMSeries(
-                            __lessonPassDuration,
+                            (__lessonDuration / 1000),
                             lessonObj.calculateWPM(__lessonDuration).toFixed(1))
             }
             if (lessonObj.lessonEnded) {
@@ -110,11 +108,9 @@ Item {
                 _statBar.__incorrectChars = (lessonObj.getTotalTypedChars(
                                                  ) - lessonObj.getCorrectChars(
                                                  ))
-                __lessonDuration = lessonObj.calculateTime(__lessonDuration)
                 testResultsModel.appendEntry(_statBar.__wpm,
                                              _statBar.__accuracy,
-                                             __lessonDuration)
-                                             //_userProfileMode.clearWPMSeries()
+                                             (__lessonDuration / 1000))
                 _lesson.js_finishLesson()
             }
         }

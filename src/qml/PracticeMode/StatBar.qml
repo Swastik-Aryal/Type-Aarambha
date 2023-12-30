@@ -15,7 +15,7 @@ Rectangle {
     // Center within its parent
     anchors {
         centerIn: parent
-        verticalCenterOffset: -parent.height / 4.5
+        verticalCenterOffset: -parent.height / 4.1
     }
     color: "#151A21"
     radius: 15

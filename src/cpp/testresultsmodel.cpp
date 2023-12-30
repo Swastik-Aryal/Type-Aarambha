@@ -15,13 +15,13 @@ QVariant TestResultsModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
         case ResultsColumn::WPM:
-            return QString("<u>Wpm</u>");
+            return QString("WPM");
         case ResultsColumn::Accuracy:
-            return QString("<u>Accuracy</u>");
+            return QString("Accuracy");
         case ResultsColumn::TestDuration:
-            return QString("<u>Duration</u>");
+            return QString("Duration");
         case ResultsColumn::DateTime:
-            return QString("<u>Date&time</u>");
+            return QString("Date, Time");
         }
     }
     return QVariant();
