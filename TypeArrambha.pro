@@ -28,3 +28,5 @@ HEADERS += \
     src/cpp/lesson.h
 
 LIBS += -luser32
+
+RC_ICONS = assets\img\typearrambhaicon.ico

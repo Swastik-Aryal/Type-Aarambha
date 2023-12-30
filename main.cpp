@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    app.setWindowIcon(QIcon(":/assets/assets/img/typearrambhaicon.png"));
 
     LayoutSwitcher layoutSwitcher;
     engine.rootContext()->setContextProperty("layoutSwitcher", &layoutSwitcher);
