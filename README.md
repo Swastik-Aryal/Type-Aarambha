@@ -39,8 +39,11 @@ In this mode, users indulge in a highly engaging and entertaining game that subc
 
 ### Profile Section
 
-The profile page serves as a comprehensive record of a user's typing performance and progress. Users can access detailed insights into their typing journey, including metrics such as words per minute (WPM), accuracy, and completion times for each typing set they've undertaken. 
+The profile page serves as a comprehensive record of a user's typing performance and progress. Users can access detailed insights into their typing journey, including metrics such as words per minute (WPM), accuracy, and completion times for each typing set they've undertaken. The user can also see thier WPM being plotted against time with the help of the spline graph.
 
+![Profile1](./assets/img/profile1.png) 
+
+![Profile2](./assets/img/profile2.png) 
 
 # The Team
 
