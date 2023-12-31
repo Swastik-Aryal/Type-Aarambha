@@ -94,11 +94,14 @@ Item {
         running: _lesson.state === "LessonActive"
         onTriggered: {
             __lessonDuration += 20
+
+            //updates the wpm chart every second
             if (__lessonDuration == 0 || __lessonDuration % 1000 == 0) {
                 _userProfileMode.appendToWPMSeries(
                             (__lessonDuration / 1000),
                             lessonObj.calculateWPM(__lessonDuration).toFixed(1))
             }
+
             if (lessonObj.lessonEnded) {
                 _lessonTimer.stop()
                 _statBar.__wpm = lessonObj.calculateWPM(
@@ -108,6 +111,8 @@ Item {
                 _statBar.__incorrectChars = (lessonObj.getTotalTypedChars(
                                                  ) - lessonObj.getCorrectChars(
                                                  ))
+
+                //sends to database
                 testResultsModel.appendEntry(_statBar.__wpm,
                                              _statBar.__accuracy,
                                              (__lessonDuration / 1000))

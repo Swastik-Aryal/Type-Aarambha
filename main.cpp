@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
 
     TestResultsModel *testResults = new TestResultsModel(&app);
     testResults->loadFromFile(QFile("results.csv"));
+    engine.rootContext()->setContextProperty("testResultsModel", testResults);
+
     ResultsSortFilterProxyModel *proxyModel = new ResultsSortFilterProxyModel(&app);
     proxyModel->setSourceModel(testResults);
-
-    engine.rootContext()->setContextProperty("testResultsModel", testResults);
     engine.rootContext()->setContextProperty("resultsProxyModel", proxyModel);
 
     const QUrl url(u"qrc:/main.qml"_qs);

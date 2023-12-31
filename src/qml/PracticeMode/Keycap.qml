@@ -9,7 +9,6 @@ Rectangle {
     property color __keyRectColor: "#151A21"
     property bool __lightSwitch: false
 
-    //outer Rectangle
     id: _rootRectKey
     width: 40
     height: 40
@@ -52,7 +51,6 @@ Rectangle {
             font.pixelSize: parent.height * 0.5
             color: __keyTextColor
             anchors.centerIn: parent
-            //   anchors.verticalCenterOffset: -(parent.height / 8)
         }
     }
 }

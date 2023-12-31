@@ -11,8 +11,6 @@ class Lesson : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString textPrompt READ textPrompt NOTIFY textPromptChanged)
-    Q_PROPERTY(QString currentLanguage READ getCurrentLanguage WRITE setCurrentLanguage NOTIFY
-                   currentLanguageChanged)
     Q_PROPERTY(bool lessonEnded READ lessonEnded NOTIFY lessonEndedChanged)
 
 public:

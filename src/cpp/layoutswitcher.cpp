@@ -31,6 +31,9 @@ void LayoutSwitcher::switchToNepali()
     ActivateKeyboardLayout(hklNepali, KLF_SETFORPROCESS);
 }
 
+/*
+ * Deals with changing the layout when application is out of focus or closed
+ */
 bool LayoutSwitcher::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Close) {

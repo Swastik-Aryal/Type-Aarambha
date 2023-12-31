@@ -1,11 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 
-// Main Item containing the keyboard layout
 Item {
 
     property string __shiftState: "base"
-    property bool __capsLockPressed: false
 
     id: _keyboardLayoutItem
 
@@ -674,7 +672,7 @@ Item {
         }
     }
 
-    //updates the text on the keycops
+    //updates the text on the keycaps
     function js_updateKeyTexts() {
         for (var i = 0; i < keyList.length - 4; ++i) {
             var key = keyList[i]

@@ -38,7 +38,6 @@ void Lesson::restart()
     m_nextCharacterIndex = 0;
     m_lessonEnded = false;
     m_currentWordIdx = 0;
-    qDebug() << m_currentWordIdx;
     updateTextPrompt(true);
 }
 
@@ -73,16 +72,17 @@ void Lesson::processKbInput(const QString &input,
                             bool spacePressed,
                             const QString &currentMode)
 {
-    // mode true means lesson
+    //for coloring the correctly typed char
     QString initialcolor = "#CCCCB5";
     if (currentMode == "game"){
         initialcolor = "black";
     }
+
     const QString &currentLessonWord = m_currentWordSample[m_currentWordIdx];
     QString wordColor;
     bool resetTextPrompt = false;
 
-    /* Update character counts only if keypress was not backspace. */
+    // Update character counts only if keypress was not backspace.
     if (!backspacePressed) {
         if (newCharIsCorrect(currentLessonWord, input)) {
             m_correctChars++;
@@ -93,8 +93,7 @@ void Lesson::processKbInput(const QString &input,
         m_totalTypedChars++;
     }
     if (spacePressed) {
-        /* Update accepted character count, set color for typed word
-         * and change active word in test prompt. */
+        //Update accepted character count, set color for typed word and change active word in test prompt.
         QStringView typedWord(input.constData(), input.size() - 1);
         if (typedWord == currentLessonWord) {
             m_totalAcceptedChars += input.size();
@@ -106,9 +105,10 @@ void Lesson::processKbInput(const QString &input,
             QString("<font color='%1'>%2 </font>").arg(wordColor, currentLessonWord));
         m_currentWordIdx++;
         if (m_currentWordIdx == m_wordsPerSample) {
+            //end lesson and generate new prompt
+            endLesson();
             sampleWordDataset();
             resetTextPrompt = true;
-            endLesson();
         } else {
             const QString &nextTestWord = m_currentWordSample[m_currentWordIdx];
             m_textPromptCurrentWord = QString("<u>%1</u>").arg(nextTestWord);
@@ -116,8 +116,7 @@ void Lesson::processKbInput(const QString &input,
         }
 
     } else {
-        /* Set color for each typed letter of current word,
-         * depending on correctness. */
+        // Set color for each typed letter of current word, depending on correctness.
         setCurrentWordColor(currentLessonWord, input, currentMode);
     }
     updateTextPrompt(resetTextPrompt);
@@ -126,7 +125,7 @@ void Lesson::processKbInput(const QString &input,
 void Lesson::processgameKbInput(const QString &input,
                                 const QString &currentMode)
 {
-
+    //for coloring the correctly typed char
     QString initialcolor = "white";
     if (currentMode == "game") {
         initialcolor = "black";
@@ -136,14 +135,14 @@ void Lesson::processgameKbInput(const QString &input,
     bool resetTextPrompt = false;
     m_lessonEnded = false;
 
-    /* Update character counts*/
-
+    // Update character counts
     if (newCharIsCorrect(currentLessonWord, input)) {
         m_correctChars++;
     }
     m_totalTypedChars++;
 
     if (m_currentWordIdx + 1 == m_wordsPerSample && input.size() == currentLessonWord.size()){
+        //genarate new word for the next log
         endLesson();
         sampleWordDataset();
         resetTextPrompt = true;
@@ -167,7 +166,9 @@ void Lesson::setCurrentWordColor(const QString &currentWord, const QString &user
     }
     unsigned numTypedChars = std::min(currentWord.size(), userInput.size());
     unsigned numUntypedChars = currentWord.size() - numTypedChars;
+
     m_textPromptCurrentWord.clear();
+
     for (unsigned i = 0; i < numTypedChars; i++) {
         QString color = initialcolor;
         if (userInput[i] != currentWord[i]) {
@@ -176,7 +177,7 @@ void Lesson::setCurrentWordColor(const QString &currentWord, const QString &user
         m_textPromptCurrentWord.append(
             QString("<font color='%1'>%2</font>").arg(color, currentWord[i]));
     }
-    /* append untyped part of word (with default color) */
+    // append untyped part of word (with default color)
     m_textPromptCurrentWord.append(QStringView(currentWord).right(numUntypedChars));
     m_textPromptCurrentWord = QString("<u>%1</u>").arg(m_textPromptCurrentWord);
 }
